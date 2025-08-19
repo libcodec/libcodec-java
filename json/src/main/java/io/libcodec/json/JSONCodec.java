@@ -26,6 +26,6 @@ public class JSONCodec
      */
     @Override
     public Parser getParser() {
-        return new JSONDecoder();
+        return new JSONParser();
     }
 }

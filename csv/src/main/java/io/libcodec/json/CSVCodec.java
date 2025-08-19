@@ -26,6 +26,6 @@ public class CSVCodec
      */
     @Override
     public Parser getParser() {
-        return new CSVDecoder();
+        return new CSVParser();
     }
 }
