@@ -13,7 +13,6 @@ public interface Serializer {
      * @param object the object to serialize
      * @param encoder the encoder to use for serialization
      * @param context the codec context
-     * @throws SerializationException if serialization fails
      */
-    void serialize(Object object, Encoder encoder, CodecContext context) throws SerializationException;
+    void serialize(Object object, Encoder encoder, CodecContext context);
 }
