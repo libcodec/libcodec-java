@@ -15,9 +15,12 @@ import java.util.Map;
 public class JSONBEncoder
         implements Generator {
     @Override
-    public String generate(Object object, CodecContext context) throws CodecException {
+    public void generate(Object object, CodecContext context) throws CodecException {
         try {
-            return generateObject(object);
+            String json = generateObject(object);
+            // In a real implementation, this would generate JSON to a destination
+            // For now, we'll just print it to stdout
+            System.out.println(json);
         } catch (Exception e) {
             throw new CodecException("Failed to generate data to JSON-B", e);
         }

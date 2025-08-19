@@ -10,11 +10,12 @@ import io.libcodec.Generator;
 public class JSONEncoder
         implements Generator {
     @Override
-    public String generate(Object object, CodecContext context) throws CodecException {
+    public void generate(Object object, CodecContext context) throws CodecException {
         try {
             // Assuming there's a JSON implementation available
             // This is a simplified implementation
-            return "{}"; // Placeholder implementation
+            // In a real implementation, this would generate JSON to a destination
+            System.out.println("{}"); // Placeholder implementation
         } catch (Exception e) {
             throw new CodecException("Failed to generate JSON from object", e);
         }

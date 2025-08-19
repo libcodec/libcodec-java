@@ -18,11 +18,10 @@ public class JSONB {
      * Converts an object to its JSON-B representation.
      *
      * @param object the object to convert
-     * @return the JSON-B representation of the object
      * @throws CodecException if the conversion fails
      */
-    public static String toJson(Object object) throws CodecException {
-        return CODEC.getGenerator().generate(object, CONTEXT);
+    public static void toJson(Object object) throws CodecException {
+        CODEC.getGenerator().generate(object, CONTEXT);
     }
 
     /**
