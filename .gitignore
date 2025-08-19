@@ -1,0 +1,21 @@
+# Build output
+target/
+bin/
+build/
+
+# IDE files
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Maven
+.mvn/
+
+# Logs
+*.log
