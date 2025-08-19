@@ -12,8 +12,7 @@ public interface Serializer<T> {
      *
      * @param object the object to serialize
      * @param context the codec context
-     * @return the serialized byte array
      * @throws SerializationException if serialization fails
      */
-    byte[] serialize(T object, CodecContext context) throws SerializationException;
+    void serialize(T object, CodecContext context) throws SerializationException;
 }
