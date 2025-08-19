@@ -2,25 +2,15 @@ package io.libcodec.json;
 
 import io.libcodec.CodecContext;
 import io.libcodec.CodecException;
-import io.libcodec.Generator;
 
 /**
  * JSON generator implementation that generates objects to UTF-16 byte arrays.
  */
 public class JSONGeneratorUTF16
-        implements Generator {
-    private final JSONGenerator jsonGenerator;
-
-    /**
-     * Constructs a new JSON generator for UTF-16 byte arrays.
-     */
-    public JSONGeneratorUTF16() {
-        this.jsonGenerator = new JSONGenerator();
-    }
-
+        extends JSONGenerator {
     @Override
     public void generate(Object object, CodecContext context) throws CodecException {
-        jsonGenerator.generate(object, context);
+        super.generate(object, context);
     }
 
     /**
