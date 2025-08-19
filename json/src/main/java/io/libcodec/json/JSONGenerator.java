@@ -10,7 +10,7 @@ import io.libcodec.Generator;
 public abstract class JSONGenerator
         implements Generator {
     @Override
-    public void generate(Object object, CodecContext context) throws CodecException {
+    public void write(Object object, CodecContext context) throws CodecException {
         try {
             // Assuming there's a JSON implementation available
             // This is a simplified implementation

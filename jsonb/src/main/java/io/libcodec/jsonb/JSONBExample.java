@@ -30,7 +30,7 @@ public class JSONBExample {
 
             // Generate the object to JSON
             System.out.print("Generated JSON: ");
-            generator.generate(person, context);
+            generator.write(person, context);
 
             // Using the utility class
             System.out.print("JSON via utility class: ");
@@ -42,7 +42,7 @@ public class JSONBExample {
             people.add(new Person("Bob", 35));
 
             System.out.print("Generated list: ");
-            generator.generate(people, context);
+            generator.write(people, context);
         } catch (CodecException e) {
             System.err.println("Codec error: " + e.getMessage());
             e.printStackTrace();

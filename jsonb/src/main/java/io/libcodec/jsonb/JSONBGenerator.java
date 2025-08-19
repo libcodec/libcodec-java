@@ -15,7 +15,7 @@ import java.util.Map;
 public class JSONBGenerator
         implements Generator {
     @Override
-    public void generate(Object object, CodecContext context) throws CodecException {
+    public void write(Object object, CodecContext context) throws CodecException {
         try {
             String json = generateObject(object);
             // In a real implementation, this would generate JSON to a destination

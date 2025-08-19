@@ -21,7 +21,7 @@ public class JSONB {
      * @throws CodecException if the conversion fails
      */
     public static void toJson(Object object) throws CodecException {
-        CODEC.getGenerator().generate(object, CONTEXT);
+        CODEC.getGenerator().write(object, CONTEXT);
     }
 
     /**

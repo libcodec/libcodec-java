@@ -5,10 +5,10 @@ package io.libcodec;
  */
 public interface Generator {
     /**
-     * Generates a string representation of an object
-     * @param object the object to generate
+     * Writes a string representation of an object
+     * @param object the object to write
      * @param context the codec context
-     * @throws CodecException if generation fails
+     * @throws CodecException if writing fails
      */
-    void generate(Object object, CodecContext context) throws CodecException;
+    void write(Object object, CodecContext context) throws CodecException;
 }

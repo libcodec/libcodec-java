@@ -10,7 +10,7 @@ import io.libcodec.Generator;
 public class CSVGenerator
         implements Generator {
     @Override
-    public void generate(Object object, CodecContext context) throws CodecException {
+    public void write(Object object, CodecContext context) throws CodecException {
         try {
             // Assuming there's a CSV implementation available
             // This is a simplified implementation
