@@ -6,7 +6,7 @@ import io.libcodec.CodecException;
 /**
  * JSON generator implementation that generates objects to UTF-16 byte arrays.
  */
-public class JSONGeneratorUTF16
+final class JSONGeneratorUTF16
         extends JSONGenerator {
     @Override
     public void generate(Object object, CodecContext context) throws CodecException {

@@ -7,7 +7,7 @@ import io.libcodec.Generator;
 /**
  * JSON generator implementation.
  */
-public class JSONGenerator
+public abstract class JSONGenerator
         implements Generator {
     @Override
     public void generate(Object object, CodecContext context) throws CodecException {
