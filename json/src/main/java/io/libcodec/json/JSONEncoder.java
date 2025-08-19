@@ -2,21 +2,21 @@ package io.libcodec.json;
 
 import io.libcodec.CodecContext;
 import io.libcodec.CodecException;
-import io.libcodec.Encoder;
+import io.libcodec.Generator;
 
 /**
- * JSON encoder implementation.
+ * JSON generator implementation.
  */
 public class JSONEncoder
-        implements Encoder {
+        implements Generator {
     @Override
-    public String encode(Object object, CodecContext context) throws CodecException {
+    public String generate(Object object, CodecContext context) throws CodecException {
         try {
             // Assuming there's a JSON implementation available
             // This is a simplified implementation
             return "{}"; // Placeholder implementation
         } catch (Exception e) {
-            throw new CodecException("Failed to encode object to JSON", e);
+            throw new CodecException("Failed to generate JSON from object", e);
         }
     }
 }

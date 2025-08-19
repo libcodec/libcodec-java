@@ -2,7 +2,7 @@ package io.libcodec.jsonb;
 
 import io.libcodec.CodecContext;
 import io.libcodec.CodecException;
-import io.libcodec.Encoder;
+import io.libcodec.Generator;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -10,20 +10,20 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * JSON-B Encoder implementation.
+ * JSON-B Generator implementation.
  */
 public class JSONBEncoder
-        implements Encoder {
+        implements Generator {
     @Override
-    public String encode(Object object, CodecContext context) throws CodecException {
+    public String generate(Object object, CodecContext context) throws CodecException {
         try {
-            return encodeObject(object);
+            return generateObject(object);
         } catch (Exception e) {
-            throw new CodecException("Failed to encode data to JSON-B", e);
+            throw new CodecException("Failed to generate data to JSON-B", e);
         }
     }
 
-    private String encodeObject(Object object) throws Exception {
+    private String generateObject(Object object) throws Exception {
         if (object == null) {
             return "null";
         }
@@ -48,7 +48,7 @@ public class JSONBEncoder
                 if (i > 0) {
                     sb.append(",");
                 }
-                sb.append(encodeObject(array[i]));
+                sb.append(generateObject(array[i]));
             }
             sb.append("]");
             return sb.toString();
@@ -63,7 +63,7 @@ public class JSONBEncoder
                 if (i > 0) {
                     sb.append(",");
                 }
-                sb.append(encodeObject(list.get(i)));
+                sb.append(generateObject(list.get(i)));
             }
             sb.append("]");
             return sb.toString();
@@ -80,7 +80,7 @@ public class JSONBEncoder
                     sb.append(",");
                 }
                 sb.append("\"").append(entry.getKey().toString().replace("\"", "\\\"")).append("\":");
-                sb.append(encodeObject(entry.getValue()));
+                sb.append(generateObject(entry.getValue()));
                 first = false;
             }
             sb.append("}");
@@ -103,7 +103,7 @@ public class JSONBEncoder
                     sb.append(",");
                 }
                 sb.append("\"").append(field.getName()).append("\":");
-                sb.append(encodeObject(value));
+                sb.append(generateObject(value));
                 first = false;
             }
         }

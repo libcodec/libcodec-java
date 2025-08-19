@@ -22,7 +22,7 @@ public class JSONB {
      * @throws CodecException if the conversion fails
      */
     public static String toJson(Object object) throws CodecException {
-        return CODEC.getEncoder().encode(object, CONTEXT);
+        return CODEC.getGenerator().generate(object, CONTEXT);
     }
 
     /**
@@ -37,6 +37,6 @@ public class JSONB {
     public static <T> T fromJson(String json, Class<T> type) throws CodecException {
         // Note: This simple implementation doesn't fully utilize the type parameter
         // A more complete implementation would use it for type safety
-        return (T) CODEC.getDecoder().decode(json, (Class<Object>) type);
+        return (T) CODEC.getParser().parse(json, (Class<Object>) type);
     }
 }

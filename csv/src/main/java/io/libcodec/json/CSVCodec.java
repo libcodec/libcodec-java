@@ -1,8 +1,8 @@
 package io.libcodec.json;
 
 import io.libcodec.Codec;
-import io.libcodec.Decoder;
-import io.libcodec.Encoder;
+import io.libcodec.Generator;
+import io.libcodec.Parser;
 
 /**
  * CSV codec implementation.
@@ -10,22 +10,22 @@ import io.libcodec.Encoder;
 public class CSVCodec
         implements Codec {
     /**
-     * Gets a CSV encoder instance.
+     * Gets a CSV generator instance.
      *
-     * @return a CSV encoder instance
+     * @return a CSV generator instance
      */
     @Override
-    public Encoder getEncoder() {
+    public Generator getGenerator() {
         return new CSVEncoder();
     }
 
     /**
-     * Gets a CSV decoder instance.
+     * Gets a CSV parser instance.
      *
-     * @return a CSV decoder instance
+     * @return a CSV parser instance
      */
     @Override
-    public Decoder getDecoder() {
+    public Parser getParser() {
         return new CSVDecoder();
     }
 }

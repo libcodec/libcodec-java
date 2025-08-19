@@ -2,21 +2,21 @@ package io.libcodec.json;
 
 import io.libcodec.CodecContext;
 import io.libcodec.CodecException;
-import io.libcodec.Encoder;
+import io.libcodec.Generator;
 
 /**
- * CSV encoder implementation.
+ * CSV generator implementation.
  */
 public class CSVEncoder
-        implements Encoder {
+        implements Generator {
     @Override
-    public String encode(Object object, CodecContext context) throws CodecException {
+    public String generate(Object object, CodecContext context) throws CodecException {
         try {
             // Assuming there's a CSV implementation available
             // This is a simplified implementation
             return ""; // Placeholder implementation
         } catch (Exception e) {
-            throw new CodecException("Failed to encode object to CSV", e);
+            throw new CodecException("Failed to generate CSV from object", e);
         }
     }
 }

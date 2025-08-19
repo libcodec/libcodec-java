@@ -1,7 +1,7 @@
 package io.libcodec.jsonb;
 
 import io.libcodec.CodecException;
-import io.libcodec.Decoder;
+import io.libcodec.Parser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,16 +9,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * JSON-B Decoder implementation.
+ * JSON-B Parser implementation.
  */
 public class JSONBDecoder
-        implements Decoder {
+        implements Parser {
     @Override
-    public <T> T decode(String data, Class<T> type) throws CodecException {
+    public <T> T parse(String data, Class<T> type) throws CodecException {
         try {
             return (T) decodeObject(data, type);
         } catch (Exception e) {
-            throw new CodecException("Failed to decode JSON-B data", e);
+            throw new CodecException("Failed to parse JSON-B data", e);
         }
     }
 

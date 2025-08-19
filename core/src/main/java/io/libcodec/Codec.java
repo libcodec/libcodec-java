@@ -1,7 +1,7 @@
 package io.libcodec;
 
 /**
- * Codec interface that provides version information and methods to get encoders and decoders.
+ * Codec interface that provides version information and methods to get generators and parsers.
  */
 public interface Codec {
     /**
@@ -10,16 +10,16 @@ public interface Codec {
     String VERSION = "1.0.0";
 
     /**
-     * Gets an encoder instance.
+     * Gets a generator instance.
      *
-     * @return an encoder instance
+     * @return a generator instance
      */
-    Encoder getEncoder();
+    Generator getGenerator();
 
     /**
-     * Gets a decoder instance.
+     * Gets a parser instance.
      *
-     * @return a decoder instance
+     * @return a parser instance
      */
-    Decoder getDecoder();
+    Parser getParser();
 }

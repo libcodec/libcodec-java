@@ -3,8 +3,8 @@ package io.libcodec.jsonb;
 import io.libcodec.Codec;
 import io.libcodec.CodecContext;
 import io.libcodec.CodecException;
-import io.libcodec.Decoder;
-import io.libcodec.Encoder;
+import io.libcodec.Generator;
+import io.libcodec.Parser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,27 +22,27 @@ public class JSONBExample {
             // Create a codec context
             CodecContext context = new CodecContext(Codec.VERSION);
 
-            // Get encoder and decoder
-            Encoder encoder = codec.getEncoder();
-            Decoder decoder = codec.getDecoder();
+            // Get generator and parser
+            Generator generator = codec.getGenerator();
+            Parser parser = codec.getParser();
 
-            // Create a sample object to encode
+            // Create a sample object to generate
             Person person = new Person("John Doe", 30);
 
-            // Encode the object to JSON
-            String json = encoder.encode(person, context);
-            System.out.println("Encoded JSON: " + json);
+            // Generate the object to JSON
+            String json = generator.generate(person, context);
+            System.out.println("Generated JSON: " + json);
 
-            // Decode the JSON back to an object (will be a Map in this simple implementation)
-            Object decodedObject = decoder.decode(json, Person.class);
-            System.out.println("Decoded object type: " + decodedObject.getClass().getName());
-            System.out.println("Decoded object: " + decodedObject);
+            // Parse the JSON back to an object (will be a Map in this simple implementation)
+            Object parsedObject = parser.parse(json, Person.class);
+            System.out.println("Parsed object type: " + parsedObject.getClass().getName());
+            System.out.println("Parsed object: " + parsedObject);
 
             // If it's a map, we can access the properties
-            if (decodedObject instanceof Map) {
-                Map<String, Object> decodedMap = (Map<String, Object>) decodedObject;
-                System.out.println("Decoded Person Name: " + decodedMap.get("name"));
-                System.out.println("Decoded Person Age: " + decodedMap.get("age"));
+            if (parsedObject instanceof Map) {
+                Map<String, Object> parsedMap = (Map<String, Object>) parsedObject;
+                System.out.println("Parsed Person Name: " + parsedMap.get("name"));
+                System.out.println("Parsed Person Age: " + parsedMap.get("age"));
             }
 
             // Using the utility class
@@ -57,11 +57,11 @@ public class JSONBExample {
             people.add(new Person("Alice", 25));
             people.add(new Person("Bob", 35));
 
-            String json3 = encoder.encode(people, context);
-            System.out.println("Encoded list: " + json3);
+            String json3 = generator.generate(people, context);
+            System.out.println("Generated list: " + json3);
 
-            Object decodedPeople = decoder.decode(json3, List.class);
-            System.out.println("Decoded list: " + decodedPeople);
+            Object parsedPeople = parser.parse(json3, List.class);
+            System.out.println("Parsed list: " + parsedPeople);
         } catch (CodecException e) {
             System.err.println("Codec error: " + e.getMessage());
             e.printStackTrace();

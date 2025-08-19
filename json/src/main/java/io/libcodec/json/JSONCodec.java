@@ -1,8 +1,8 @@
 package io.libcodec.json;
 
 import io.libcodec.Codec;
-import io.libcodec.Decoder;
-import io.libcodec.Encoder;
+import io.libcodec.Generator;
+import io.libcodec.Parser;
 
 /**
  * JSON codec implementation.
@@ -10,22 +10,22 @@ import io.libcodec.Encoder;
 public class JSONCodec
         implements Codec {
     /**
-     * Gets a JSON encoder instance.
+     * Gets a JSON generator instance.
      *
-     * @return a JSON encoder instance
+     * @return a JSON generator instance
      */
     @Override
-    public Encoder getEncoder() {
+    public Generator getGenerator() {
         return new JSONEncoder();
     }
 
     /**
-     * Gets a JSON decoder instance.
+     * Gets a JSON parser instance.
      *
-     * @return a JSON decoder instance
+     * @return a JSON parser instance
      */
     @Override
-    public Decoder getDecoder() {
+    public Parser getParser() {
         return new JSONDecoder();
     }
 }

@@ -1,29 +1,29 @@
 package io.libcodec.jsonb;
 
 import io.libcodec.Codec;
-import io.libcodec.Decoder;
-import io.libcodec.Encoder;
+import io.libcodec.Generator;
+import io.libcodec.Parser;
 
 /**
  * JSON-B Codec implementation.
  */
 public class JSONBCodec
         implements Codec {
-    private final JSONBEncoder encoder;
-    private final JSONBDecoder decoder;
+    private final JSONBEncoder generator;
+    private final JSONBDecoder parser;
 
     public JSONBCodec() {
-        this.encoder = new JSONBEncoder();
-        this.decoder = new JSONBDecoder();
+        this.generator = new JSONBEncoder();
+        this.parser = new JSONBDecoder();
     }
 
     @Override
-    public Encoder getEncoder() {
-        return encoder;
+    public Generator getGenerator() {
+        return generator;
     }
 
     @Override
-    public Decoder getDecoder() {
-        return decoder;
+    public Parser getParser() {
+        return parser;
     }
 }
