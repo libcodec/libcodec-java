@@ -16,7 +16,7 @@ public class CSVCodec
      */
     @Override
     public Generator getGenerator() {
-        return new CSVEncoder();
+        return new CSVGenerator();
     }
 
     /**

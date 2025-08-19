@@ -9,11 +9,11 @@ import io.libcodec.Parser;
  */
 public class JSONBCodec
         implements Codec {
-    private final JSONBEncoder generator;
+    private final JSONBGenerator generator;
     private final JSONBDecoder parser;
 
     public JSONBCodec() {
-        this.generator = new JSONBEncoder();
+        this.generator = new JSONBGenerator();
         this.parser = new JSONBDecoder();
     }
 
