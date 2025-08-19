@@ -1,6 +1,7 @@
 package io.libcodec.jsonb;
 
 import io.libcodec.Codec;
+import io.libcodec.CodecContext;
 import io.libcodec.CodecException;
 import io.libcodec.Decoder;
 import io.libcodec.Encoder;
@@ -18,6 +19,9 @@ public class JSONBExample {
             // Create a JSONB codec instance
             Codec codec = new JSONBCodec();
 
+            // Create a codec context
+            CodecContext context = new CodecContext(Codec.VERSION);
+
             // Get encoder and decoder
             Encoder encoder = codec.getEncoder();
             Decoder decoder = codec.getDecoder();
@@ -26,7 +30,7 @@ public class JSONBExample {
             Person person = new Person("John Doe", 30);
 
             // Encode the object to JSON
-            String json = encoder.encode(person);
+            String json = encoder.encode(person, context);
             System.out.println("Encoded JSON: " + json);
 
             // Decode the JSON back to an object (will be a Map in this simple implementation)
@@ -53,7 +57,7 @@ public class JSONBExample {
             people.add(new Person("Alice", 25));
             people.add(new Person("Bob", 35));
 
-            String json3 = encoder.encode(people);
+            String json3 = encoder.encode(people, context);
             System.out.println("Encoded list: " + json3);
 
             Object decodedPeople = decoder.decode(json3, List.class);

@@ -1,5 +1,6 @@
 package io.libcodec.json;
 
+import io.libcodec.CodecContext;
 import io.libcodec.CodecException;
 import io.libcodec.Encoder;
 
@@ -9,7 +10,7 @@ import io.libcodec.Encoder;
 public class JSONEncoder
         implements Encoder {
     @Override
-    public String encode(Object object) throws CodecException {
+    public String encode(Object object, CodecContext context) throws CodecException {
         try {
             // Assuming there's a JSON implementation available
             // This is a simplified implementation

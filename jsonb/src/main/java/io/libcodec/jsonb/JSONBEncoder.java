@@ -1,5 +1,6 @@
 package io.libcodec.jsonb;
 
+import io.libcodec.CodecContext;
 import io.libcodec.CodecException;
 import io.libcodec.Encoder;
 
@@ -14,7 +15,7 @@ import java.util.Map;
 public class JSONBEncoder
         implements Encoder {
     @Override
-    public String encode(Object object) throws CodecException {
+    public String encode(Object object, CodecContext context) throws CodecException {
         try {
             return encodeObject(object);
         } catch (Exception e) {

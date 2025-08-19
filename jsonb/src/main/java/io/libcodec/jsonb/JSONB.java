@@ -1,5 +1,6 @@
 package io.libcodec.jsonb;
 
+import io.libcodec.CodecContext;
 import io.libcodec.CodecException;
 
 /**
@@ -7,6 +8,7 @@ import io.libcodec.CodecException;
  */
 public class JSONB {
     private static final JSONBCodec CODEC = new JSONBCodec();
+    private static final CodecContext CONTEXT = new CodecContext("1.0.0");
 
     private JSONB() {
         // Private constructor to prevent instantiation
@@ -20,7 +22,7 @@ public class JSONB {
      * @throws CodecException if the conversion fails
      */
     public static String toJson(Object object) throws CodecException {
-        return CODEC.getEncoder().encode(object);
+        return CODEC.getEncoder().encode(object, CONTEXT);
     }
 
     /**
