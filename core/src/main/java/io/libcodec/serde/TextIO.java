@@ -34,12 +34,12 @@ public class TextIO {
      * Writes an int value to a byte array buffer.
      * Based on the writeInt32 method from com.alibaba.fastjson2.util.IOUtils
      *
-     * @param value the int value to write
      * @param buffer the byte array buffer to write to
      * @param offset the offset in the buffer to start writing
+     * @param value the int value to write
      * @return the new offset after writing
      */
-    public static int writeInt(int value, byte[] buffer, int offset) {
+    public static int writeInt(byte[] buffer, int offset, int value) {
         long val = value;
         int off = offset;
 
@@ -81,12 +81,12 @@ public class TextIO {
      * Writes an int value to a char array buffer.
      * Based on the writeInt32 method from com.alibaba.fastjson2.util.IOUtils
      *
-     * @param value the int value to write
      * @param buffer the char array buffer to write to
      * @param offset the offset in the buffer to start writing
+     * @param value the int value to write
      * @return the new offset after writing
      */
-    public static int writeInt(int value, char[] buffer, int offset) {
+    public static int writeInt(char[] buffer, int offset, int value) {
         long val = value;
         int off = offset;
 
