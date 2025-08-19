@@ -34,7 +34,7 @@ public class JSONCodec
      * JSON encoder implementation.
      */
     private static class JSONEncoder
-            implements Encoder<Object> {
+            implements Encoder {
         @Override
         public String encode(Object object) throws CodecException {
             try {
@@ -51,13 +51,13 @@ public class JSONCodec
      * JSON decoder implementation.
      */
     private static class JSONDecoder
-            implements Decoder<Object> {
+            implements Decoder {
         @Override
-        public Object decode(String data, Class<Object> clazz) throws CodecException {
+        public <T> T decode(String data, Class<T> clazz) throws CodecException {
             try {
                 // Assuming there's a JSON implementation available
                 // This is a simplified implementation
-                return new Object(); // Placeholder implementation
+                return clazz.getDeclaredConstructor().newInstance(); // Placeholder implementation
             } catch (Exception e) {
                 throw new CodecException("Failed to decode JSON to object", e);
             }

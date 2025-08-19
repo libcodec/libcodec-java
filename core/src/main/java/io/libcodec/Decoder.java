@@ -2,9 +2,8 @@ package io.libcodec;
 
 /**
  * Decoder interface for deserializing objects
- * @param <T> the type of object to decode
  */
-public interface Decoder<T> {
+public interface Decoder {
     /**
      * Decodes a string representation to an object
      * @param data the string to decode
@@ -12,5 +11,5 @@ public interface Decoder<T> {
      * @return the decoded object
      * @throws CodecException if decoding fails
      */
-    T decode(String data, Class<T> clazz) throws CodecException;
+    <T> T decode(String data, Class<T> clazz) throws CodecException;
 }

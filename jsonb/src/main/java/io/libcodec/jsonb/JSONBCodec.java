@@ -39,7 +39,7 @@ public class JSONBCodec
      * JSON-B Encoder implementation.
      */
     private static class JSONBEncoder
-            implements Encoder<Object> {
+            implements Encoder {
         @Override
         public String encode(Object object) throws CodecException {
             try {
@@ -142,11 +142,11 @@ public class JSONBCodec
      * JSON-B Decoder implementation.
      */
     private static class JSONBDecoder
-            implements Decoder<Object> {
+            implements Decoder {
         @Override
-        public Object decode(String data, Class<Object> type) throws CodecException {
+        public <T> T decode(String data, Class<T> type) throws CodecException {
             try {
-                return decodeObject(data, type);
+                return (T) decodeObject(data, type);
             } catch (Exception e) {
                 throw new CodecException("Failed to decode JSON-B data", e);
             }
