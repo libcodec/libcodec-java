@@ -50,6 +50,47 @@ public interface FunctionFactory {
     BiConsumer<Object, Character> setChar(Method method);
     BiConsumer<Object, Object> setObject(Method method);
 
+    // Default validation methods
+    default void validateField(Field field) {
+        if (field == null) {
+            throw new IllegalArgumentException("Field cannot be null");
+        }
+    }
+
+    default void validateMethod(Method method) {
+        if (method == null) {
+            throw new IllegalArgumentException("Method cannot be null");
+        }
+    }
+
+    default void validateFieldAndType(Field field, Class<?> expectedType) {
+        validateField(field);
+        if (!field.getType().equals(expectedType)) {
+            throw new IllegalArgumentException(
+                "Field type mismatch. Expected: " + expectedType.getSimpleName() +
+                ", Actual: " + field.getType().getSimpleName());
+        }
+    }
+
+    default void validateMethodAndReturnType(Method method, Class<?> expectedReturnType) {
+        validateMethod(method);
+        if (!method.getReturnType().equals(expectedReturnType)) {
+            throw new IllegalArgumentException(
+                "Method return type mismatch. Expected: " + expectedReturnType.getSimpleName() +
+                ", Actual: " + method.getReturnType().getSimpleName());
+        }
+    }
+
+    default void validateMethodAndParameterType(Method method, Class<?> expectedParameterType) {
+        validateMethod(method);
+        Class<?>[] parameterTypes = method.getParameterTypes();
+        if (parameterTypes.length != 1 || !parameterTypes[0].equals(expectedParameterType)) {
+            throw new IllegalArgumentException(
+                "Method parameter type mismatch. Expected: " + expectedParameterType.getSimpleName() +
+                ", Actual: " + (parameterTypes.length > 0 ? parameterTypes[0].getSimpleName() : "no parameters"));
+        }
+    }
+
     static FunctionFactory reflect() {
         return FunctionFactoryReflect.INSTANCE;
     }

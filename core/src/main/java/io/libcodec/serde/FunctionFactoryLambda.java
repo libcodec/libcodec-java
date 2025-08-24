@@ -24,6 +24,7 @@ final class FunctionFactoryLambda extends FunctionFactoryUnsafe {
 
     @Override
     public ToIntFunction<Object> getInt(Method method) {
+        validateMethodAndReturnType(method, int.class);
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (ToIntFunction<Object>) LambdaMetafactory.metafactory(
@@ -41,6 +42,7 @@ final class FunctionFactoryLambda extends FunctionFactoryUnsafe {
 
     @Override
     public ToLongFunction<Object> getLong(Method method) {
+        validateMethodAndReturnType(method, long.class);
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (ToLongFunction<Object>) LambdaMetafactory.metafactory(
@@ -58,6 +60,7 @@ final class FunctionFactoryLambda extends FunctionFactoryUnsafe {
 
     @Override
     public ToDoubleFunction<Object> getFloat(Method method) {
+        validateMethodAndReturnType(method, float.class);
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (ToDoubleFunction<Object>) LambdaMetafactory.metafactory(
@@ -75,6 +78,7 @@ final class FunctionFactoryLambda extends FunctionFactoryUnsafe {
 
     @Override
     public ToDoubleFunction<Object> getDouble(Method method) {
+        validateMethodAndReturnType(method, double.class);
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (ToDoubleFunction<Object>) LambdaMetafactory.metafactory(
@@ -92,6 +96,7 @@ final class FunctionFactoryLambda extends FunctionFactoryUnsafe {
 
     @Override
     public Predicate<Object> getBoolean(Method method) {
+        validateMethodAndReturnType(method, boolean.class);
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (Predicate<Object>) LambdaMetafactory.metafactory(
@@ -109,6 +114,7 @@ final class FunctionFactoryLambda extends FunctionFactoryUnsafe {
 
     @Override
     public ToIntFunction<Object> getChar(Method method) {
+        validateMethodAndReturnType(method, char.class);
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (ToIntFunction<Object>) LambdaMetafactory.metafactory(
@@ -126,6 +132,7 @@ final class FunctionFactoryLambda extends FunctionFactoryUnsafe {
 
     @Override
     public Function<Object, Object> getObject(Method method) {
+        validateMethod(method);
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (Function<Object, Object>) LambdaMetafactory.metafactory(
@@ -143,6 +150,7 @@ final class FunctionFactoryLambda extends FunctionFactoryUnsafe {
 
     @Override
     public ObjIntConsumer<Object> setInt(Method method) {
+        validateMethodAndParameterType(method, int.class);
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (ObjIntConsumer<Object>) LambdaMetafactory.metafactory(
@@ -160,6 +168,7 @@ final class FunctionFactoryLambda extends FunctionFactoryUnsafe {
 
     @Override
     public ObjLongConsumer<Object> setLong(Method method) {
+        validateMethodAndParameterType(method, long.class);
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (ObjLongConsumer<Object>) LambdaMetafactory.metafactory(
@@ -177,6 +186,7 @@ final class FunctionFactoryLambda extends FunctionFactoryUnsafe {
 
     @Override
     public BiConsumer<Object, Float> setFloat(Method method) {
+        validateMethodAndParameterType(method, float.class);
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (BiConsumer<Object, Float>) LambdaMetafactory.metafactory(
@@ -194,6 +204,7 @@ final class FunctionFactoryLambda extends FunctionFactoryUnsafe {
 
     @Override
     public ObjDoubleConsumer<Object> setDouble(Method method) {
+        validateMethodAndParameterType(method, double.class);
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (ObjDoubleConsumer<Object>) LambdaMetafactory.metafactory(
@@ -211,6 +222,7 @@ final class FunctionFactoryLambda extends FunctionFactoryUnsafe {
 
     @Override
     public BiConsumer<Object, Boolean> setBoolean(Method method) {
+        validateMethodAndParameterType(method, boolean.class);
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (BiConsumer<Object, Boolean>) LambdaMetafactory.metafactory(
@@ -228,6 +240,7 @@ final class FunctionFactoryLambda extends FunctionFactoryUnsafe {
 
     @Override
     public BiConsumer<Object, Character> setChar(Method method) {
+        validateMethodAndParameterType(method, char.class);
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (BiConsumer<Object, Character>) LambdaMetafactory.metafactory(
@@ -245,6 +258,11 @@ final class FunctionFactoryLambda extends FunctionFactoryUnsafe {
 
     @Override
     public BiConsumer<Object, Object> setObject(Method method) {
+        validateMethod(method);
+        Class<?>[] parameterTypes = method.getParameterTypes();
+        if (parameterTypes.length != 1) {
+            throw new IllegalArgumentException("Method must have exactly one parameter");
+        }
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (BiConsumer<Object, Object>) LambdaMetafactory.metafactory(

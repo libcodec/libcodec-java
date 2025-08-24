@@ -19,6 +19,7 @@ class FunctionFactoryReflect
 
     @Override
     public ToIntFunction<Object> getInt(Field field) {
+        validateFieldAndType(field, int.class);
         return o -> {
             try {
                 return field.getInt(o);
@@ -31,6 +32,7 @@ class FunctionFactoryReflect
 
     @Override
     public ToLongFunction<Object> getLong(Field field) {
+        validateFieldAndType(field, long.class);
         return o -> {
             try {
                 return field.getLong(o);
@@ -43,6 +45,7 @@ class FunctionFactoryReflect
 
     @Override
     public ToDoubleFunction<Object> getFloat(Field field) {
+        validateFieldAndType(field, float.class);
         return o -> {
             try {
                 return field.getFloat(o);
@@ -55,6 +58,7 @@ class FunctionFactoryReflect
 
     @Override
     public ToDoubleFunction<Object> getDouble(Field field) {
+        validateFieldAndType(field, double.class);
         return o -> {
             try {
                 return field.getDouble(o);
@@ -67,6 +71,7 @@ class FunctionFactoryReflect
 
     @Override
     public Predicate<Object> getBoolean(Field field) {
+        validateFieldAndType(field, boolean.class);
         return o -> {
             try {
                 return field.getBoolean(o);
@@ -79,6 +84,7 @@ class FunctionFactoryReflect
 
     @Override
     public ToIntFunction<Object> getChar(Field field) {
+        validateFieldAndType(field, char.class);
         return o -> {
             try {
                 return field.getChar(o);
@@ -91,6 +97,7 @@ class FunctionFactoryReflect
 
     @Override
     public Function<Object, Object> getObject(Field field) {
+        validateField(field);
         return o -> {
             try {
                 return field.get(o);
@@ -103,6 +110,7 @@ class FunctionFactoryReflect
 
     @Override
     public ObjIntConsumer<Object> setInt(Field field) {
+        validateFieldAndType(field, int.class);
         return (o, v) -> {
             try {
                 field.setInt(o, v);
@@ -115,6 +123,7 @@ class FunctionFactoryReflect
 
     @Override
     public ObjLongConsumer<Object> setLong(Field field) {
+        validateFieldAndType(field, long.class);
         return (o, v) -> {
             try {
                 field.setLong(o, v);
@@ -127,6 +136,7 @@ class FunctionFactoryReflect
 
     @Override
     public BiConsumer<Object, Float> setFloat(Field field) {
+        validateFieldAndType(field, float.class);
         return (o, v) -> {
             try {
                 field.setFloat(o, v);
@@ -139,6 +149,7 @@ class FunctionFactoryReflect
 
     @Override
     public ObjDoubleConsumer<Object> setDouble(Field field) {
+        validateFieldAndType(field, double.class);
         return (o, v) -> {
             try {
                 field.setDouble(o, v);
@@ -151,6 +162,7 @@ class FunctionFactoryReflect
 
     @Override
     public BiConsumer<Object, Boolean> setBoolean(Field field) {
+        validateFieldAndType(field, boolean.class);
         return (o, v) -> {
             try {
                 field.setBoolean(o, v);
@@ -163,6 +175,7 @@ class FunctionFactoryReflect
 
     @Override
     public BiConsumer<Object, Character> setChar(Field field) {
+        validateFieldAndType(field, char.class);
         return (o, v) -> {
             try {
                 field.setChar(o, v);
@@ -175,6 +188,7 @@ class FunctionFactoryReflect
 
     @Override
     public BiConsumer<Object, Object> setObject(Field field) {
+        validateField(field);
         return (o, v) -> {
             try {
                 field.set(o, v);
@@ -187,6 +201,7 @@ class FunctionFactoryReflect
 
     @Override
     public ToIntFunction<Object> getInt(Method method) {
+        validateMethodAndReturnType(method, int.class);
         return o -> {
             try {
                 return (int) method.invoke(o);
@@ -199,6 +214,7 @@ class FunctionFactoryReflect
 
     @Override
     public ToLongFunction<Object> getLong(Method method) {
+        validateMethodAndReturnType(method, long.class);
         return o -> {
             try {
                 return (long) method.invoke(o);
@@ -211,6 +227,7 @@ class FunctionFactoryReflect
 
     @Override
     public ToDoubleFunction<Object> getFloat(Method method) {
+        validateMethodAndReturnType(method, float.class);
         return o -> {
             try {
                 return (float) method.invoke(o);
@@ -223,6 +240,7 @@ class FunctionFactoryReflect
 
     @Override
     public ToDoubleFunction<Object> getDouble(Method method) {
+        validateMethodAndReturnType(method, double.class);
         return o -> {
             try {
                 return (double) method.invoke(o);
@@ -235,6 +253,7 @@ class FunctionFactoryReflect
 
     @Override
     public Predicate<Object> getBoolean(Method method) {
+        validateMethodAndReturnType(method, boolean.class);
         return o -> {
             try {
                 return (boolean) method.invoke(o);
@@ -247,6 +266,7 @@ class FunctionFactoryReflect
 
     @Override
     public ToIntFunction<Object> getChar(Method method) {
+        validateMethodAndReturnType(method, char.class);
         return o -> {
             try {
                 return (char) method.invoke(o);
@@ -259,6 +279,7 @@ class FunctionFactoryReflect
 
     @Override
     public Function<Object, Object> getObject(Method method) {
+        validateMethod(method);
         return o -> {
             try {
                 return method.invoke(o);
@@ -271,6 +292,7 @@ class FunctionFactoryReflect
 
     @Override
     public ObjIntConsumer<Object> setInt(Method method) {
+        validateMethodAndParameterType(method, int.class);
         return (o, v) -> {
             try {
                 method.invoke(o, v);
@@ -283,6 +305,7 @@ class FunctionFactoryReflect
 
     @Override
     public ObjLongConsumer<Object> setLong(Method method) {
+        validateMethodAndParameterType(method, long.class);
         return (o, v) -> {
             try {
                 method.invoke(o, v);
@@ -295,6 +318,7 @@ class FunctionFactoryReflect
 
     @Override
     public BiConsumer<Object, Float> setFloat(Method method) {
+        validateMethodAndParameterType(method, float.class);
         return (o, v) -> {
             try {
                 method.invoke(o, v);
@@ -307,6 +331,7 @@ class FunctionFactoryReflect
 
     @Override
     public ObjDoubleConsumer<Object> setDouble(Method method) {
+        validateMethodAndParameterType(method, double.class);
         return (o, v) -> {
             try {
                 method.invoke(o, v);
@@ -319,6 +344,7 @@ class FunctionFactoryReflect
 
     @Override
     public BiConsumer<Object, Boolean> setBoolean(Method method) {
+        validateMethodAndParameterType(method, boolean.class);
         return (o, v) -> {
             try {
                 method.invoke(o, v);
@@ -331,6 +357,7 @@ class FunctionFactoryReflect
 
     @Override
     public BiConsumer<Object, Character> setChar(Method method) {
+        validateMethodAndParameterType(method, char.class);
         return (o, v) -> {
             try {
                 method.invoke(o, v);
@@ -343,6 +370,11 @@ class FunctionFactoryReflect
 
     @Override
     public BiConsumer<Object, Object> setObject(Method method) {
+        validateMethod(method);
+        Class<?>[] parameterTypes = method.getParameterTypes();
+        if (parameterTypes.length != 1) {
+            throw new IllegalArgumentException("Method must have exactly one parameter");
+        }
         return (o, v) -> {
             try {
                 method.invoke(o, v);
