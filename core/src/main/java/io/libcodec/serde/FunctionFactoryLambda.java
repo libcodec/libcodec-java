@@ -23,7 +23,7 @@ final class FunctionFactoryLambda extends FunctionFactoryReflect {
     }
 
     @Override
-    public ToIntFunction<Object> toInt(Method method) {
+    public ToIntFunction<Object> getInt(Method method) {
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (ToIntFunction<Object>) LambdaMetafactory.metafactory(
@@ -40,7 +40,7 @@ final class FunctionFactoryLambda extends FunctionFactoryReflect {
     }
 
     @Override
-    public ToLongFunction<Object> toLong(Method method) {
+    public ToLongFunction<Object> getLong(Method method) {
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (ToLongFunction<Object>) LambdaMetafactory.metafactory(
@@ -57,7 +57,7 @@ final class FunctionFactoryLambda extends FunctionFactoryReflect {
     }
 
     @Override
-    public ToDoubleFunction<Object> toFloat(Method method) {
+    public ToDoubleFunction<Object> getFloat(Method method) {
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (ToDoubleFunction<Object>) LambdaMetafactory.metafactory(
@@ -74,7 +74,7 @@ final class FunctionFactoryLambda extends FunctionFactoryReflect {
     }
 
     @Override
-    public ToDoubleFunction<Object> toDouble(Method method) {
+    public ToDoubleFunction<Object> getDouble(Method method) {
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (ToDoubleFunction<Object>) LambdaMetafactory.metafactory(
@@ -91,7 +91,7 @@ final class FunctionFactoryLambda extends FunctionFactoryReflect {
     }
 
     @Override
-    public Predicate<Object> toBoolean(Method method) {
+    public Predicate<Object> getBoolean(Method method) {
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (Predicate<Object>) LambdaMetafactory.metafactory(
@@ -108,7 +108,7 @@ final class FunctionFactoryLambda extends FunctionFactoryReflect {
     }
 
     @Override
-    public ToIntFunction<Object> toChar(Method method) {
+    public ToIntFunction<Object> getChar(Method method) {
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (ToIntFunction<Object>) LambdaMetafactory.metafactory(
@@ -125,7 +125,7 @@ final class FunctionFactoryLambda extends FunctionFactoryReflect {
     }
 
     @Override
-    public Function<Object, Object> function(Method method) {
+    public Function<Object, Object> getObject(Method method) {
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (Function<Object, Object>) LambdaMetafactory.metafactory(
@@ -142,7 +142,7 @@ final class FunctionFactoryLambda extends FunctionFactoryReflect {
     }
 
     @Override
-    public ObjIntConsumer<Object> toIntSetter(Method method) {
+    public ObjIntConsumer<Object> setInt(Method method) {
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (ObjIntConsumer<Object>) LambdaMetafactory.metafactory(
@@ -159,7 +159,7 @@ final class FunctionFactoryLambda extends FunctionFactoryReflect {
     }
 
     @Override
-    public ObjLongConsumer<Object> toLongSetter(Method method) {
+    public ObjLongConsumer<Object> setLong(Method method) {
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (ObjLongConsumer<Object>) LambdaMetafactory.metafactory(
@@ -176,7 +176,7 @@ final class FunctionFactoryLambda extends FunctionFactoryReflect {
     }
 
     @Override
-    public BiConsumer<Object, Float> toFloatSetter(Method method) {
+    public BiConsumer<Object, Float> setFloat(Method method) {
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (BiConsumer<Object, Float>) LambdaMetafactory.metafactory(
@@ -193,7 +193,7 @@ final class FunctionFactoryLambda extends FunctionFactoryReflect {
     }
 
     @Override
-    public ObjDoubleConsumer<Object> toDoubleSetter(Method method) {
+    public ObjDoubleConsumer<Object> setDouble(Method method) {
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (ObjDoubleConsumer<Object>) LambdaMetafactory.metafactory(
@@ -210,7 +210,7 @@ final class FunctionFactoryLambda extends FunctionFactoryReflect {
     }
 
     @Override
-    public BiConsumer<Object, Boolean> toBooleanSetter(Method method) {
+    public BiConsumer<Object, Boolean> setBoolean(Method method) {
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (BiConsumer<Object, Boolean>) LambdaMetafactory.metafactory(
@@ -227,7 +227,7 @@ final class FunctionFactoryLambda extends FunctionFactoryReflect {
     }
 
     @Override
-    public BiConsumer<Object, Character> toCharSetter(Method method) {
+    public BiConsumer<Object, Character> setChar(Method method) {
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (BiConsumer<Object, Character>) LambdaMetafactory.metafactory(
@@ -244,7 +244,7 @@ final class FunctionFactoryLambda extends FunctionFactoryReflect {
     }
 
     @Override
-    public BiConsumer<Object, Object> functionSetter(Method method) {
+    public BiConsumer<Object, Object> setObject(Method method) {
         try {
             MethodHandle handle = lookup.unreflect(method);
             return (BiConsumer<Object, Object>) LambdaMetafactory.metafactory(

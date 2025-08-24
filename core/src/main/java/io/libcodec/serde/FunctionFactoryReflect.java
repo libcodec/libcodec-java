@@ -18,7 +18,7 @@ class FunctionFactoryReflect
     static final FunctionFactoryReflect INSTANCE = new FunctionFactoryReflect();
 
     @Override
-    public ToIntFunction<Object> toInt(Field field) {
+    public ToIntFunction<Object> getInt(Field field) {
         return o -> {
             try {
                 return field.getInt(o);
@@ -30,7 +30,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public ToLongFunction<Object> toLong(Field field) {
+    public ToLongFunction<Object> getLong(Field field) {
         return o -> {
             try {
                 return field.getLong(o);
@@ -42,7 +42,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public ToDoubleFunction<Object> toFloat(Field field) {
+    public ToDoubleFunction<Object> getFloat(Field field) {
         return o -> {
             try {
                 return field.getFloat(o);
@@ -54,7 +54,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public ToDoubleFunction<Object> toDouble(Field field) {
+    public ToDoubleFunction<Object> getDouble(Field field) {
         return o -> {
             try {
                 return field.getDouble(o);
@@ -66,7 +66,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public Predicate<Object> toBoolean(Field field) {
+    public Predicate<Object> getBoolean(Field field) {
         return o -> {
             try {
                 return field.getBoolean(o);
@@ -78,7 +78,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public ToIntFunction<Object> toChar(Field field) {
+    public ToIntFunction<Object> getChar(Field field) {
         return o -> {
             try {
                 return field.getChar(o);
@@ -90,7 +90,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public Function<Object, Object> function(Field field) {
+    public Function<Object, Object> getObject(Field field) {
         return o -> {
             try {
                 return field.get(o);
@@ -102,7 +102,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public ObjIntConsumer<Object> toIntSetter(Field field) {
+    public ObjIntConsumer<Object> setInt(Field field) {
         return (o, v) -> {
             try {
                 field.setInt(o, v);
@@ -114,7 +114,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public ObjLongConsumer<Object> toLongSetter(Field field) {
+    public ObjLongConsumer<Object> setLong(Field field) {
         return (o, v) -> {
             try {
                 field.setLong(o, v);
@@ -126,7 +126,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public BiConsumer<Object, Float> toFloatSetter(Field field) {
+    public BiConsumer<Object, Float> setFloat(Field field) {
         return (o, v) -> {
             try {
                 field.setFloat(o, v);
@@ -138,7 +138,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public ObjDoubleConsumer<Object> toDoubleSetter(Field field) {
+    public ObjDoubleConsumer<Object> setDouble(Field field) {
         return (o, v) -> {
             try {
                 field.setDouble(o, v);
@@ -150,7 +150,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public BiConsumer<Object, Boolean> toBooleanSetter(Field field) {
+    public BiConsumer<Object, Boolean> setBoolean(Field field) {
         return (o, v) -> {
             try {
                 field.setBoolean(o, v);
@@ -162,7 +162,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public BiConsumer<Object, Character> toCharSetter(Field field) {
+    public BiConsumer<Object, Character> setChar(Field field) {
         return (o, v) -> {
             try {
                 field.setChar(o, v);
@@ -174,7 +174,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public BiConsumer<Object, Object> functionSetter(Field field) {
+    public BiConsumer<Object, Object> setObject(Field field) {
         return (o, v) -> {
             try {
                 field.set(o, v);
@@ -186,7 +186,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public ToIntFunction<Object> toInt(Method method) {
+    public ToIntFunction<Object> getInt(Method method) {
         return o -> {
             try {
                 return (int) method.invoke(o);
@@ -198,7 +198,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public ToLongFunction<Object> toLong(Method method) {
+    public ToLongFunction<Object> getLong(Method method) {
         return o -> {
             try {
                 return (long) method.invoke(o);
@@ -210,7 +210,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public ToDoubleFunction<Object> toFloat(Method method) {
+    public ToDoubleFunction<Object> getFloat(Method method) {
         return o -> {
             try {
                 return (float) method.invoke(o);
@@ -222,7 +222,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public ToDoubleFunction<Object> toDouble(Method method) {
+    public ToDoubleFunction<Object> getDouble(Method method) {
         return o -> {
             try {
                 return (double) method.invoke(o);
@@ -234,7 +234,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public Predicate<Object> toBoolean(Method method) {
+    public Predicate<Object> getBoolean(Method method) {
         return o -> {
             try {
                 return (boolean) method.invoke(o);
@@ -246,7 +246,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public ToIntFunction<Object> toChar(Method method) {
+    public ToIntFunction<Object> getChar(Method method) {
         return o -> {
             try {
                 return (char) method.invoke(o);
@@ -258,7 +258,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public Function<Object, Object> function(Method method) {
+    public Function<Object, Object> getObject(Method method) {
         return o -> {
             try {
                 return method.invoke(o);
@@ -270,7 +270,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public ObjIntConsumer<Object> toIntSetter(Method method) {
+    public ObjIntConsumer<Object> setInt(Method method) {
         return (o, v) -> {
             try {
                 method.invoke(o, v);
@@ -282,7 +282,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public ObjLongConsumer<Object> toLongSetter(Method method) {
+    public ObjLongConsumer<Object> setLong(Method method) {
         return (o, v) -> {
             try {
                 method.invoke(o, v);
@@ -294,7 +294,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public BiConsumer<Object, Float> toFloatSetter(Method method) {
+    public BiConsumer<Object, Float> setFloat(Method method) {
         return (o, v) -> {
             try {
                 method.invoke(o, v);
@@ -306,7 +306,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public ObjDoubleConsumer<Object> toDoubleSetter(Method method) {
+    public ObjDoubleConsumer<Object> setDouble(Method method) {
         return (o, v) -> {
             try {
                 method.invoke(o, v);
@@ -318,7 +318,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public BiConsumer<Object, Boolean> toBooleanSetter(Method method) {
+    public BiConsumer<Object, Boolean> setBoolean(Method method) {
         return (o, v) -> {
             try {
                 method.invoke(o, v);
@@ -330,7 +330,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public BiConsumer<Object, Character> toCharSetter(Method method) {
+    public BiConsumer<Object, Character> setChar(Method method) {
         return (o, v) -> {
             try {
                 method.invoke(o, v);
@@ -342,7 +342,7 @@ class FunctionFactoryReflect
     }
 
     @Override
-    public BiConsumer<Object, Object> functionSetter(Method method) {
+    public BiConsumer<Object, Object> setObject(Method method) {
         return (o, v) -> {
             try {
                 method.invoke(o, v);

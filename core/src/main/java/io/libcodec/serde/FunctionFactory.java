@@ -15,40 +15,40 @@ import java.util.function.ToLongFunction;
 
 public interface FunctionFactory {
     // Getter methods for fields
-    ToIntFunction<Object> toInt(Field field);
-    ToLongFunction<Object> toLong(Field field);
-    ToDoubleFunction<Object> toFloat(Field field);
-    ToDoubleFunction<Object> toDouble(Field field);
-    Predicate<Object> toBoolean(Field field);
-    ToIntFunction<Object> toChar(Field field);
-    Function<Object, Object> function(Field field);
+    ToIntFunction<Object> getInt(Field field);
+    ToLongFunction<Object> getLong(Field field);
+    ToDoubleFunction<Object> getFloat(Field field);
+    ToDoubleFunction<Object> getDouble(Field field);
+    Predicate<Object> getBoolean(Field field);
+    ToIntFunction<Object> getChar(Field field);
+    Function<Object, Object> getObject(Field field);
 
     // Setter methods for fields
-    ObjIntConsumer<Object> toIntSetter(Field field);
-    ObjLongConsumer<Object> toLongSetter(Field field);
-    BiConsumer<Object, Float> toFloatSetter(Field field);
-    ObjDoubleConsumer<Object> toDoubleSetter(Field field);
-    BiConsumer<Object, Boolean> toBooleanSetter(Field field);
-    BiConsumer<Object, Character> toCharSetter(Field field);
-    BiConsumer<Object, Object> functionSetter(Field field);
+    ObjIntConsumer<Object> setInt(Field field);
+    ObjLongConsumer<Object> setLong(Field field);
+    BiConsumer<Object, Float> setFloat(Field field);
+    ObjDoubleConsumer<Object> setDouble(Field field);
+    BiConsumer<Object, Boolean> setBoolean(Field field);
+    BiConsumer<Object, Character> setChar(Field field);
+    BiConsumer<Object, Object> setObject(Field field);
 
     // Getter methods for methods
-    ToIntFunction<Object> toInt(Method method);
-    ToLongFunction<Object> toLong(Method method);
-    ToDoubleFunction<Object> toFloat(Method method);
-    ToDoubleFunction<Object> toDouble(Method method);
-    Predicate<Object> toBoolean(Method method);
-    ToIntFunction<Object> toChar(Method method);
-    Function<Object, Object> function(Method method);
+    ToIntFunction<Object> getInt(Method method);
+    ToLongFunction<Object> getLong(Method method);
+    ToDoubleFunction<Object> getFloat(Method method);
+    ToDoubleFunction<Object> getDouble(Method method);
+    Predicate<Object> getBoolean(Method method);
+    ToIntFunction<Object> getChar(Method method);
+    Function<Object, Object> getObject(Method method);
 
     // Setter methods for methods (setters)
-    ObjIntConsumer<Object> toIntSetter(Method method);
-    ObjLongConsumer<Object> toLongSetter(Method method);
-    BiConsumer<Object, Float> toFloatSetter(Method method);
-    ObjDoubleConsumer<Object> toDoubleSetter(Method method);
-    BiConsumer<Object, Boolean> toBooleanSetter(Method method);
-    BiConsumer<Object, Character> toCharSetter(Method method);
-    BiConsumer<Object, Object> functionSetter(Method method);
+    ObjIntConsumer<Object> setInt(Method method);
+    ObjLongConsumer<Object> setLong(Method method);
+    BiConsumer<Object, Float> setFloat(Method method);
+    ObjDoubleConsumer<Object> setDouble(Method method);
+    BiConsumer<Object, Boolean> setBoolean(Method method);
+    BiConsumer<Object, Character> setChar(Method method);
+    BiConsumer<Object, Object> setObject(Method method);
 
     static FunctionFactory reflect() {
         return FunctionFactoryReflect.INSTANCE;

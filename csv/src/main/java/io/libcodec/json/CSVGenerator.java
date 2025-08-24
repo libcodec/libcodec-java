@@ -2,6 +2,7 @@ package io.libcodec.json;
 
 import io.libcodec.CodecException;
 import io.libcodec.Generator;
+import io.libcodec.io.Buffer;
 
 /**
  * CSV generator implementation.
@@ -14,7 +15,7 @@ public class CSVGenerator
     }
 
     @Override
-    public Object getBuffer() {
+    public Buffer getBuffer() {
         throw new CodecException("Not implemented");
     }
 }

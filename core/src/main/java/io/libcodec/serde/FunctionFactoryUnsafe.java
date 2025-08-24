@@ -30,85 +30,85 @@ class FunctionFactoryUnsafe
     }
 
     @Override
-    public ToIntFunction<Object> toInt(Field field) {
+    public ToIntFunction<Object> getInt(Field field) {
         long offset = UNSAFE.objectFieldOffset(field);
         return o -> UNSAFE.getInt(o, offset);
     }
 
     @Override
-    public ToLongFunction<Object> toLong(Field field) {
+    public ToLongFunction<Object> getLong(Field field) {
         long offset = UNSAFE.objectFieldOffset(field);
         return o -> UNSAFE.getLong(o, offset);
     }
 
     @Override
-    public ToDoubleFunction<Object> toFloat(Field field) {
+    public ToDoubleFunction<Object> getFloat(Field field) {
         long offset = UNSAFE.objectFieldOffset(field);
         return o -> UNSAFE.getFloat(o, offset);
     }
 
     @Override
-    public ToDoubleFunction<Object> toDouble(Field field) {
+    public ToDoubleFunction<Object> getDouble(Field field) {
         long offset = UNSAFE.objectFieldOffset(field);
         return o -> UNSAFE.getDouble(o, offset);
     }
 
     @Override
-    public Predicate<Object> toBoolean(Field field) {
+    public Predicate<Object> getBoolean(Field field) {
         long offset = UNSAFE.objectFieldOffset(field);
         return o -> UNSAFE.getBoolean(o, offset);
     }
 
     @Override
-    public ToIntFunction<Object> toChar(Field field) {
+    public ToIntFunction<Object> getChar(Field field) {
         long offset = UNSAFE.objectFieldOffset(field);
         return o -> UNSAFE.getChar(o, offset);
     }
 
     @Override
-    public Function<Object, Object> function(Field field) {
+    public Function<Object, Object> getObject(Field field) {
         long offset = UNSAFE.objectFieldOffset(field);
         return o -> UNSAFE.getObject(o, offset);
     }
 
     @Override
-    public ObjIntConsumer<Object> toIntSetter(Field field) {
+    public ObjIntConsumer<Object> setInt(Field field) {
         long offset = UNSAFE.objectFieldOffset(field);
         return (o, v) -> UNSAFE.putInt(o, offset, v);
     }
 
     @Override
-    public ObjLongConsumer<Object> toLongSetter(Field field) {
+    public ObjLongConsumer<Object> setLong(Field field) {
         long offset = UNSAFE.objectFieldOffset(field);
         return (o, v) -> UNSAFE.putLong(o, offset, v);
     }
 
     @Override
-    public BiConsumer<Object, Float> toFloatSetter(Field field) {
+    public BiConsumer<Object, Float> setFloat(Field field) {
         long offset = UNSAFE.objectFieldOffset(field);
         return (o, v) -> UNSAFE.putFloat(o, offset, v);
     }
 
     @Override
-    public ObjDoubleConsumer<Object> toDoubleSetter(Field field) {
+    public ObjDoubleConsumer<Object> setDouble(Field field) {
         long offset = UNSAFE.objectFieldOffset(field);
         return (o, v) -> UNSAFE.putDouble(o, offset, v);
     }
 
     @Override
-    public BiConsumer<Object, Boolean> toBooleanSetter(Field field) {
+    public BiConsumer<Object, Boolean> setBoolean(Field field) {
         long offset = UNSAFE.objectFieldOffset(field);
         return (o, v) -> UNSAFE.putBoolean(o, offset, v);
     }
 
     @Override
-    public BiConsumer<Object, Character> toCharSetter(Field field) {
+    public BiConsumer<Object, Character> setChar(Field field) {
         long offset = UNSAFE.objectFieldOffset(field);
         return (o, v) -> UNSAFE.putChar(o, offset, v);
     }
 
     @Override
-    public BiConsumer<Object, Object> functionSetter(Field field) {
+    public BiConsumer<Object, Object> setObject(Field field) {
         long offset = UNSAFE.objectFieldOffset(field);
         return (o, v) -> UNSAFE.putObject(o, offset, v);
     }
