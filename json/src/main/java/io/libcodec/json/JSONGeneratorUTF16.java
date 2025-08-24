@@ -26,7 +26,7 @@ public final class JSONGeneratorUTF16
     }
 
     @Override
-    public JSONGenerator objectStart() {
+    public JSONGeneratorUTF16 objectStart() {
         if (++level > maxLevel) {
             overflowLevel();
         }
@@ -50,7 +50,7 @@ public final class JSONGeneratorUTF16
     }
 
     @Override
-    public final JSONGenerator writeComma() {
+    public JSONGeneratorUTF16 writeComma() {
         startObject = false;
         int off = this.off;
         int minCapacity = off + 2 + pretty * level;
@@ -68,7 +68,7 @@ public final class JSONGeneratorUTF16
     }
 
     @Override
-    public JSONGenerator writeString(String str) {
+    public JSONGeneratorUTF16 writeString(String str) {
         if (str == null) {
             writeStringNull();
             return this;
@@ -468,5 +468,9 @@ public final class JSONGeneratorUTF16
         System.arraycopy(name, coff, chars, off, len);
         this.off = off + len;
         return this;
+    }
+
+    public JSONGeneratorUTF16 writeChar(char ch) {
+        return writeString(String.valueOf(ch));
     }
 }

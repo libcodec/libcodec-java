@@ -4,7 +4,10 @@ import io.libcodec.json.JSONGenerator;
 import io.libcodec.json.JSONGeneratorUTF16;
 import io.libcodec.json.JSONGeneratorUTF8;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.util.function.Function;
 
 public abstract class PropertySerializer {
     public final String name;
@@ -101,4 +104,52 @@ public abstract class PropertySerializer {
     }
 
     public abstract Object getValue(Object object);
+
+    public static PropertySerializer of(String propertyName, Class<?> type, Function function) {
+        return of(propertyName, type, type, 0, null, function);
+    }
+
+    public static PropertySerializer of(
+            String propertyName,
+            Class<?> rawClass,
+            Type type,
+            long features,
+            Object defaultValue,
+            Function function
+    ) {
+        return new PropertySerializer(propertyName, rawClass, type, features, defaultValue) {
+            @Override
+            public Object getValue(Object object) {
+                return function.apply(object);
+            }
+        };
+    }
+
+    public static PropertySerializer of(String propertyName, Class<?> rawClass, Type type, long features, Object defaultValue, Field field) {
+        return new PropertySerializer(propertyName, rawClass, type, features, defaultValue) {
+            @Override
+            public Object getValue(Object object) {
+                try {
+                    return field.get(object);
+                }
+                catch (IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+    }
+
+    public static PropertySerializer of(String propertyName, Class<?> rawClass, Type type, long features, Object defaultValue, Method method) {
+        return new PropertySerializer(propertyName, rawClass, type, features, defaultValue) {
+            @Override
+            public Object getValue(Object object) {
+                try {
+                    return method.invoke(object);
+                }
+                catch (ReflectiveOperationException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+    }
 }

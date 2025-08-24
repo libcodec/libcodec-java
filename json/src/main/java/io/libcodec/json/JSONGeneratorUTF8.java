@@ -67,7 +67,7 @@ public final class JSONGeneratorUTF8
     }
 
     @Override
-    public final JSONGenerator writeComma() {
+    public JSONGeneratorUTF8 writeComma() {
         startObject = false;
         int off = this.off;
         int minCapacity = off + 2 + pretty * level;
@@ -84,7 +84,7 @@ public final class JSONGeneratorUTF8
     }
 
     @Override
-    public final JSONGenerator writeColon() {
+    public JSONGeneratorUTF8 writeColon() {
         int off = this.off;
         grow1(off)[off] = ':';
         this.off = off + 1;
@@ -92,7 +92,7 @@ public final class JSONGeneratorUTF8
     }
 
     @Override
-    public final JSONGenerator writeInt(int i) {
+    public JSONGeneratorUTF8 writeInt(int i) {
         boolean writeAsString = (features & MASK_WRITE_NON_STRING_VALUE_AS_STRING) != 0;
 
         int off = this.off;
@@ -113,7 +113,7 @@ public final class JSONGeneratorUTF8
     }
 
     @Override
-    public final JSONGenerator writeLong(long i) {
+    public JSONGeneratorUTF8 writeLong(long i) {
         int off = this.off;
         int minCapacity = off + 23;
         byte[] bytes = this.bytes;
@@ -138,7 +138,7 @@ public final class JSONGeneratorUTF8
     }
 
     @Override
-    public JSONGenerator writeString(String str) {
+    public JSONGeneratorUTF8 writeString(String str) {
         if (str == null) {
             writeStringNull();
             return this;
@@ -193,7 +193,7 @@ public final class JSONGeneratorUTF8
         this.off = StringUtils.writeLatin1(bytes, off, value, quote);
     }
 
-    protected final void writeStringLatin1BrowserSecure(byte[] value) {
+    protected void writeStringLatin1BrowserSecure(byte[] value) {
         final byte quote = (byte) this.quote;
         int i = 0;
         for (; i < value.length; i++) {
@@ -487,7 +487,7 @@ public final class JSONGeneratorUTF8
     }
 
     @Override
-    public JSONGenerator writeBool(boolean value) {
+    public JSONGeneratorUTF8 writeBool(boolean value) {
         int minCapacity = off + 5;
         byte[] bytes = this.bytes;
         if (minCapacity > bytes.length) {
@@ -504,7 +504,7 @@ public final class JSONGeneratorUTF8
     }
 
     @Override
-    public final JSONGenerator writeFloat(float value) {
+    public JSONGeneratorUTF8 writeFloat(float value) {
         boolean writeAsString = (features & MASK_WRITE_NON_STRING_VALUE_AS_STRING) != 0;
 
         int off = this.off;
@@ -528,7 +528,7 @@ public final class JSONGeneratorUTF8
     }
 
     @Override
-    public final JSONGenerator writeDouble(double value) {
+    public JSONGeneratorUTF8 writeDouble(double value) {
         boolean writeAsString = (features & MASK_WRITE_NON_STRING_VALUE_AS_STRING) != 0;
 
         int off = this.off;
@@ -552,7 +552,7 @@ public final class JSONGeneratorUTF8
     }
 
     @Override
-    public JSONGenerator writeNull() {
+    public JSONGeneratorUTF8 writeNull() {
         int off = this.off;
         byte[] bytes = grow(off + 4);
         this.off = IOUtils.writeNull(bytes, off);
@@ -594,5 +594,9 @@ public final class JSONGeneratorUTF8
         System.arraycopy(name, coff, bytes, off, len);
         this.off = off + len;
         return this;
+    }
+
+    public JSONGeneratorUTF8 writeChar(char ch) {
+        return writeString(String.valueOf(ch));
     }
 }

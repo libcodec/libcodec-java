@@ -862,4 +862,6 @@ public abstract sealed class JSONGenerator
             }
         }
     }
+
+    public abstract JSONGenerator writeChar(char ch);
 }
