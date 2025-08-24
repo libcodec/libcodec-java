@@ -14,6 +14,10 @@ public class BeanSerializer implements Serializer {
         serializerUTF16 = createSerializerUTF16(properties);
     }
 
+    public int getPropertiesCount() {
+        return properties.length;
+    }
+
     @Override
     public void serialize(Object object, JSONGeneratorUTF8 generator, SerializeContext context) {
         if (object == null) {

@@ -12,6 +12,7 @@ public class BeanSerializerTest {
         BeanSerializer serializer = new BeanSerializer(
                 new PropertySerializer[] {PropertySerializerInt.of("name", (Object e) -> ((Person) e).age())}
         );
+        assertEquals(1, serializer.getPropertiesCount());
         JSONGeneratorUTF8 generator = JSONGeneratorUTF8.ofUTF8();
         SerializeContext context = new SerializeContext();
         serializer.serialize(new Person(10), generator, context);
