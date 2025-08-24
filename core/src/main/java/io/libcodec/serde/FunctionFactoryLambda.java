@@ -15,7 +15,7 @@ import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongFunction;
 
-final class FunctionFactoryLambda extends FunctionFactoryReflect {
+final class FunctionFactoryLambda extends FunctionFactoryUnsafe {
     private final MethodHandles.Lookup lookup;
 
     public FunctionFactoryLambda(MethodHandles.Lookup lookup) {
