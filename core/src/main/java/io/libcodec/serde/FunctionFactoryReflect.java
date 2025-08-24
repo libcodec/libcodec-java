@@ -2,13 +2,17 @@ package io.libcodec.serde;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.function.ObjDoubleConsumer;
+import java.util.function.ObjIntConsumer;
+import java.util.function.ObjLongConsumer;
 import java.util.function.Predicate;
 import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongFunction;
 
-final class FunctionFactoryReflect
+class FunctionFactoryReflect
         implements FunctionFactory
 {
     static final FunctionFactoryReflect INSTANCE = new FunctionFactoryReflect();
@@ -98,6 +102,90 @@ final class FunctionFactoryReflect
     }
 
     @Override
+    public ObjIntConsumer<Object> toIntSetter(Field field) {
+        return (o, v) -> {
+            try {
+                field.setInt(o, v);
+            }
+            catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        };
+    }
+
+    @Override
+    public ObjLongConsumer<Object> toLongSetter(Field field) {
+        return (o, v) -> {
+            try {
+                field.setLong(o, v);
+            }
+            catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        };
+    }
+
+    @Override
+    public BiConsumer<Object, Float> toFloatSetter(Field field) {
+        return (o, v) -> {
+            try {
+                field.setFloat(o, v);
+            }
+            catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        };
+    }
+
+    @Override
+    public ObjDoubleConsumer<Object> toDoubleSetter(Field field) {
+        return (o, v) -> {
+            try {
+                field.setDouble(o, v);
+            }
+            catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        };
+    }
+
+    @Override
+    public BiConsumer<Object, Boolean> toBooleanSetter(Field field) {
+        return (o, v) -> {
+            try {
+                field.setBoolean(o, v);
+            }
+            catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        };
+    }
+
+    @Override
+    public BiConsumer<Object, Character> toCharSetter(Field field) {
+        return (o, v) -> {
+            try {
+                field.setChar(o, v);
+            }
+            catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        };
+    }
+
+    @Override
+    public BiConsumer<Object, Object> functionSetter(Field field) {
+        return (o, v) -> {
+            try {
+                field.set(o, v);
+            }
+            catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        };
+    }
+
+    @Override
     public ToIntFunction<Object> toInt(Method method) {
         return o -> {
             try {
@@ -174,6 +262,90 @@ final class FunctionFactoryReflect
         return o -> {
             try {
                 return method.invoke(o);
+            }
+            catch (ReflectiveOperationException e) {
+                throw new RuntimeException(e);
+            }
+        };
+    }
+
+    @Override
+    public ObjIntConsumer<Object> toIntSetter(Method method) {
+        return (o, v) -> {
+            try {
+                method.invoke(o, v);
+            }
+            catch (ReflectiveOperationException e) {
+                throw new RuntimeException(e);
+            }
+        };
+    }
+
+    @Override
+    public ObjLongConsumer<Object> toLongSetter(Method method) {
+        return (o, v) -> {
+            try {
+                method.invoke(o, v);
+            }
+            catch (ReflectiveOperationException e) {
+                throw new RuntimeException(e);
+            }
+        };
+    }
+
+    @Override
+    public BiConsumer<Object, Float> toFloatSetter(Method method) {
+        return (o, v) -> {
+            try {
+                method.invoke(o, v);
+            }
+            catch (ReflectiveOperationException e) {
+                throw new RuntimeException(e);
+            }
+        };
+    }
+
+    @Override
+    public ObjDoubleConsumer<Object> toDoubleSetter(Method method) {
+        return (o, v) -> {
+            try {
+                method.invoke(o, v);
+            }
+            catch (ReflectiveOperationException e) {
+                throw new RuntimeException(e);
+            }
+        };
+    }
+
+    @Override
+    public BiConsumer<Object, Boolean> toBooleanSetter(Method method) {
+        return (o, v) -> {
+            try {
+                method.invoke(o, v);
+            }
+            catch (ReflectiveOperationException e) {
+                throw new RuntimeException(e);
+            }
+        };
+    }
+
+    @Override
+    public BiConsumer<Object, Character> toCharSetter(Method method) {
+        return (o, v) -> {
+            try {
+                method.invoke(o, v);
+            }
+            catch (ReflectiveOperationException e) {
+                throw new RuntimeException(e);
+            }
+        };
+    }
+
+    @Override
+    public BiConsumer<Object, Object> functionSetter(Method method) {
+        return (o, v) -> {
+            try {
+                method.invoke(o, v);
             }
             catch (ReflectiveOperationException e) {
                 throw new RuntimeException(e);

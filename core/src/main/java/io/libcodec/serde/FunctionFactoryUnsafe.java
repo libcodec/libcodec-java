@@ -3,16 +3,18 @@ package io.libcodec.serde;
 import sun.misc.Unsafe;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.function.ObjDoubleConsumer;
+import java.util.function.ObjIntConsumer;
+import java.util.function.ObjLongConsumer;
 import java.util.function.Predicate;
 import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongFunction;
 
-final class FunctionFactoryUnsafe
-        implements FunctionFactory
-{
+class FunctionFactoryUnsafe
+        extends FunctionFactoryReflect {
     static final FunctionFactoryUnsafe INSTANCE = new FunctionFactoryUnsafe();
 
     private static final Unsafe UNSAFE;
@@ -70,93 +72,44 @@ final class FunctionFactoryUnsafe
     }
 
     @Override
-    public ToIntFunction<Object> toInt(Method method) {
-        // For methods, we fall back to reflection as Unsafe doesn't directly support method invocation
-        return o -> {
-            try {
-                return (int) method.invoke(o);
-            }
-            catch (ReflectiveOperationException e) {
-                throw new RuntimeException(e);
-            }
-        };
+    public ObjIntConsumer<Object> toIntSetter(Field field) {
+        long offset = UNSAFE.objectFieldOffset(field);
+        return (o, v) -> UNSAFE.putInt(o, offset, v);
     }
 
     @Override
-    public ToLongFunction<Object> toLong(Method method) {
-        // For methods, we fall back to reflection as Unsafe doesn't directly support method invocation
-        return o -> {
-            try {
-                return (long) method.invoke(o);
-            }
-            catch (ReflectiveOperationException e) {
-                throw new RuntimeException(e);
-            }
-        };
+    public ObjLongConsumer<Object> toLongSetter(Field field) {
+        long offset = UNSAFE.objectFieldOffset(field);
+        return (o, v) -> UNSAFE.putLong(o, offset, v);
     }
 
     @Override
-    public ToDoubleFunction<Object> toFloat(Method method) {
-        // For methods, we fall back to reflection as Unsafe doesn't directly support method invocation
-        return o -> {
-            try {
-                return (float) method.invoke(o);
-            }
-            catch (ReflectiveOperationException e) {
-                throw new RuntimeException(e);
-            }
-        };
+    public BiConsumer<Object, Float> toFloatSetter(Field field) {
+        long offset = UNSAFE.objectFieldOffset(field);
+        return (o, v) -> UNSAFE.putFloat(o, offset, v);
     }
 
     @Override
-    public ToDoubleFunction<Object> toDouble(Method method) {
-        // For methods, we fall back to reflection as Unsafe doesn't directly support method invocation
-        return o -> {
-            try {
-                return (double) method.invoke(o);
-            }
-            catch (ReflectiveOperationException e) {
-                throw new RuntimeException(e);
-            }
-        };
+    public ObjDoubleConsumer<Object> toDoubleSetter(Field field) {
+        long offset = UNSAFE.objectFieldOffset(field);
+        return (o, v) -> UNSAFE.putDouble(o, offset, v);
     }
 
     @Override
-    public Predicate<Object> toBoolean(Method method) {
-        // For methods, we fall back to reflection as Unsafe doesn't directly support method invocation
-        return o -> {
-            try {
-                return (boolean) method.invoke(o);
-            }
-            catch (ReflectiveOperationException e) {
-                throw new RuntimeException(e);
-            }
-        };
+    public BiConsumer<Object, Boolean> toBooleanSetter(Field field) {
+        long offset = UNSAFE.objectFieldOffset(field);
+        return (o, v) -> UNSAFE.putBoolean(o, offset, v);
     }
 
     @Override
-    public ToIntFunction<Object> toChar(Method method) {
-        // For methods, we fall back to reflection as Unsafe doesn't directly support method invocation
-        return o -> {
-            try {
-                return (char) method.invoke(o);
-            }
-            catch (ReflectiveOperationException e) {
-                throw new RuntimeException(e);
-            }
-        };
+    public BiConsumer<Object, Character> toCharSetter(Field field) {
+        long offset = UNSAFE.objectFieldOffset(field);
+        return (o, v) -> UNSAFE.putChar(o, offset, v);
     }
 
     @Override
-    public Function<Object, Object> function(Method method) {
-        // For methods, we fall back to reflection as Unsafe doesn't directly support method invocation
-        return o -> {
-            try {
-                return method.invoke(o);
-            }
-            catch (ReflectiveOperationException e) {
-                throw new RuntimeException(e);
-            }
-        };
+    public BiConsumer<Object, Object> functionSetter(Field field) {
+        long offset = UNSAFE.objectFieldOffset(field);
+        return (o, v) -> UNSAFE.putObject(o, offset, v);
     }
 }

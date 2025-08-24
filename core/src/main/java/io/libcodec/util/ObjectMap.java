@@ -51,9 +51,9 @@ public class ObjectMap<K, V> implements Iterable<ObjectMap.Entry<K, V>> {
     float loadFactor;
     int threshold;
 
-    /** Used by {@link #place(Object)} to bit shift the upper bits of a {@code long} into a usable range (&gt;= 0 and &lt;=
+    /** Used by {@link #place(Object)} to bit shift the upper bits of a {@code long} into a usable range (>= 0 and <=
      * {@link #mask}). The shift can be negative, which is convenient to match the number of bits in mask: if mask is a 7-bit
-     * number, a shift of -7 shifts the upper 7 bits into the lowest 7 positions. This class sets the shift &gt; 32 and &lt; 64,
+     * number, a shift of -7 shifts the upper 7 bits into the lowest 7 positions. This class sets the shift > 32 and < 64,
      * which if used with an int will still move the upper bits of an int to the lower bits due to Java's implicit modulus on
      * shifts.
      * <p>
