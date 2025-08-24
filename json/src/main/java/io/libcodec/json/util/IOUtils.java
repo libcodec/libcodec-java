@@ -410,7 +410,7 @@ public class IOUtils {
                 putByte(buf, off, (byte) '.');
 
                 if (scale == 1) {
-                    putByte(buf, off + 1, (byte) (rem + '0'));
+                    buf[off + 1] = (byte) (rem + '0');
                     return off + 2;
                 } else if (scale == 2) {
                     writeDigitPair(buf, off + 1, (int) rem);
@@ -2033,7 +2033,10 @@ public class IOUtils {
      * @param pos the position in the buffer where to write "null"
      */
     public static void putNULL(byte[] buf, int pos) {
-        UNSAFE.putInt(buf, ARRAY_BYTE_BASE_OFFSET + pos, NULL_32);
+        buf[pos] = 'n';
+        buf[pos + 1] = 'u';
+        buf[pos + 2] = 'l';
+        buf[pos + 3] = 'l';
     }
 
     /**
@@ -2045,7 +2048,10 @@ public class IOUtils {
      * @param pos the position in the buffer where to write "null"
      */
     public static void putNULL(char[] buf, int pos) {
-        UNSAFE.putLong(buf, ARRAY_CHAR_BASE_OFFSET + ((long) pos << 1), NULL_64);
+        buf[pos] = 'n';
+        buf[pos + 1] = 'u';
+        buf[pos + 2] = 'l';
+        buf[pos + 3] = 'l';
     }
 
     /**
