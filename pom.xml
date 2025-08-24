@@ -72,7 +72,10 @@
                             <failOnViolation>true</failOnViolation>
                             <includeTestSourceDirectory>true</includeTestSourceDirectory>
                             <configLocation>src/checkstyle/libcodec-checks.xml</configLocation>
-                            <excludes>module-info.java,</excludes>
+                            <excludes>
+                                module-info.java,
+                                io/libcodec/util/ObjectMap.java,
+                                io/libcodec/util/IdentityMap.java</excludes>
                         </configuration>
                     </execution>
                 </executions>

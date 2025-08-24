@@ -1,6 +1,6 @@
 package io.libcodec.json;
 
-import io.libcodec.json.util.IOUtils;
+import io.libcodec.io.CharBuffer;
 import io.libcodec.json.util.NumberUtils;
 import io.libcodec.json.util.StringUtils;
 
@@ -10,13 +10,13 @@ import static io.libcodec.json.JSONGenerator.Feature.BrowserSecure;
 import static io.libcodec.json.JSONGenerator.Feature.EscapeNoneAscii;
 import static io.libcodec.json.JSONGenerator.Feature.WriteBooleanAsNumber;
 import static io.libcodec.json.JSONGenerator.Feature.WriteNonStringValueAsString;
-import static io.libcodec.json.util.IOUtils.writeNull;
 
 /**
  * JSON generator implementation that generates objects to UTF-16 byte arrays.
  */
-final class JSONGeneratorUTF16
-        extends JSONGenerator {
+public final class JSONGeneratorUTF16
+        extends JSONGenerator
+        implements CharBuffer {
     char[] chars;
 
     JSONGeneratorUTF16(long features) {
@@ -420,6 +420,52 @@ final class JSONGeneratorUTF16
         int off = this.off;
         char[] chars = grow(off + 4);
         this.off = IOUtils.writeNull(chars, off);
+        return this;
+    }
+
+    @Override
+    public CharBuffer getBuffer() {
+        return this;
+    }
+
+    @Override
+    public char[] ensureCapacity(int minCapacity) {
+        if (minCapacity > chars.length) {
+            grow0(minCapacity);
+        }
+        return chars;
+    }
+
+    public void writeRaw(char[] raw) {
+        writeRaw(raw, 0, raw.length);
+    }
+
+    public void writeRaw(char[] raw, int coff, int strlen) {
+        int off = this.off;
+        char[] chars = ensureCapacity(off + strlen);
+        System.arraycopy(raw, coff, chars, off, strlen);
+        this.off = off + strlen;
+    }
+
+    public JSONGeneratorUTF16 writeNameRaw(char[] name) {
+        return writeNameRaw(name, 0, name.length);
+    }
+
+    public JSONGeneratorUTF16 writeNameRaw(char[] name, int coff, int len) {
+        int off = this.off;
+        int minCapacity = off + len + 2 + pretty * level;
+        char[] chars = this.chars;
+        if (minCapacity > chars.length) {
+            chars = grow(minCapacity);
+        }
+
+        if (startObject) {
+            startObject = false;
+        } else {
+            chars[off++] = ',';
+        }
+        System.arraycopy(name, coff, chars, off, len);
+        this.off = off + len;
         return this;
     }
 }

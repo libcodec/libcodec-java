@@ -12,4 +12,9 @@ public class CSVGenerator
     public Generator writeObject(Object object) {
         throw new CodecException("Not implemented");
     }
+
+    @Override
+    public Object getBuffer() {
+        throw new CodecException("Not implemented");
+    }
 }

@@ -5,6 +5,8 @@ import java.lang.reflect.Type;
 public class SerializeContext {
     private Object object;
     private String fieldName;
+    private int arrayIndex;
+    private long features;
 
     public Object getObject() {
         return object;
@@ -18,11 +20,27 @@ public class SerializeContext {
         return fieldName;
     }
 
-    public void setFieldName(String fieldName) {
+    public void setPropertyName(String fieldName) {
         this.fieldName = fieldName;
     }
 
     public Serializer getSerializer(Type type) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public long getFeatures() {
+        return features;
+    }
+
+    public void setFeatures(long features) {
+        this.features = features;
+    }
+
+    public int getArrayIndex() {
+        return arrayIndex;
+    }
+
+    public void setArrayIndex(int arrayIndex) {
+        this.arrayIndex = arrayIndex;
     }
 }

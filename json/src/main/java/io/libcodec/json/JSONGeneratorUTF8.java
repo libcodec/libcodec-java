@@ -1,5 +1,6 @@
 package io.libcodec.json;
 
+import io.libcodec.io.ByteBuffer;
 import io.libcodec.json.util.IOUtils;
 import io.libcodec.json.util.NumberUtils;
 import io.libcodec.json.util.StringUtils;
@@ -13,8 +14,9 @@ import static io.libcodec.json.util.JDKUtils.STRING_VALUE;
 /**
  * JSON generator implementation that generates objects to UTF-8 byte arrays.
  */
-final class JSONGeneratorUTF8
-        extends JSONGenerator {
+public final class JSONGeneratorUTF8
+        extends JSONGenerator
+        implements ByteBuffer {
     byte[] bytes;
     private final long byteVectorQuote;
 
@@ -554,6 +556,43 @@ final class JSONGeneratorUTF8
         int off = this.off;
         byte[] bytes = grow(off + 4);
         this.off = IOUtils.writeNull(bytes, off);
+        return this;
+    }
+
+    @Override
+    public ByteBuffer getBuffer() {
+        return this;
+    }
+
+    @Override
+    public byte[] ensureCapacity(int minCapacity) {
+        if (minCapacity > bytes.length) {
+            grow0(minCapacity);
+        }
+        return bytes;
+    }
+
+    public JSONGeneratorUTF8 writeNameRaw(byte[] name) {
+        return writeNameRaw(name, 0, name.length);
+    }
+
+    public JSONGeneratorUTF8 writeNameRaw(byte[] name, int coff, int len) {
+        int off = this.off;
+        int minCapacity = off + len + 2 + pretty * level;
+        byte[] bytes = this.bytes;
+        if (minCapacity > bytes.length) {
+            bytes = grow(minCapacity);
+        }
+
+        if (!startObject) {
+            bytes[off++] = ',';
+            if (pretty != PRETTY_NON) {
+                off = indent(bytes, off);
+            }
+        }
+        startObject = false;
+        System.arraycopy(name, coff, bytes, off, len);
+        this.off = off + len;
         return this;
     }
 }

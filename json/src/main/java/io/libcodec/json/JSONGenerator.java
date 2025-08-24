@@ -3,6 +3,7 @@ package io.libcodec.json;
 import io.libcodec.CodecContext;
 import io.libcodec.CodecException;
 import io.libcodec.Generator;
+import io.libcodec.io.Buffer;
 
 import static io.libcodec.json.JSONObject.*;
 
@@ -11,7 +12,7 @@ import static io.libcodec.json.JSONObject.*;
  */
 public abstract sealed class JSONGenerator
         extends Generator
-        implements AutoCloseable
+        implements AutoCloseable, Buffer
         permits JSONGeneratorUTF8, JSONGeneratorUTF16 {
     static final byte PRETTY_NON = 0, PRETTY_TAB = 1, PRETTY_2_SPACE = 2, PRETTY_4_SPACE = 4;
     protected byte pretty;
@@ -45,7 +46,7 @@ public abstract sealed class JSONGenerator
      *
      * @return a new UTF-8 JSON generator
      */
-    public static JSONGenerator ofUTF8(Feature... features) {
+    public static JSONGeneratorUTF8 ofUTF8(Feature... features) {
         return new JSONGeneratorUTF8(
                 Feature.valueOf(features));
     }
@@ -55,7 +56,7 @@ public abstract sealed class JSONGenerator
      *
      * @return a new UTF-16 JSON generator
      */
-    public static JSONGenerator ofUTF16(Feature... features) {
+    public static JSONGeneratorUTF16 ofUTF16(Feature... features) {
         return new JSONGeneratorUTF16(
                 Feature.valueOf(features));
     }
@@ -121,6 +122,10 @@ public abstract sealed class JSONGenerator
 
     public abstract JSONGenerator objectStart();
     public abstract JSONGenerator objectEnd();
+
+    public JSONGenerator writeName(String name, boolean colon) {
+        return writeName(name).writeColon();
+    }
 
     public JSONGenerator writeName(String name) {
         if (startObject) {
