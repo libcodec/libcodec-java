@@ -48,6 +48,13 @@ public class JSONObject {
         }
     }
 
+    record EntryObject(String name, Object valueObject) implements Entry {
+        @Override
+        public Object value() {
+            return valueObject;
+        }
+    }
+
     static Entry entry(String name, int valueInt) {
         return new EntryInt(name, valueInt);
     }
@@ -70,5 +77,9 @@ public class JSONObject {
 
     static Entry entry(String name, double valueDouble) {
         return new EntryDouble(name, valueDouble);
+    }
+
+    static Entry entry(String name, Object value) {
+        return new EntryObject(name, value);
     }
 }

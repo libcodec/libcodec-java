@@ -8,7 +8,13 @@ import io.libcodec.CodecException;
  */
 public class JSONB {
     private static final JSONBCodec CODEC = new JSONBCodec();
-    private static final CodecContext CONTEXT = new CodecContext("1.0.0");
+    private static final CodecContext CONTEXT = new CodecContext() {
+        @Override
+        public io.libcodec.serde.Serializer getSerializer(java.lang.reflect.Type type) {
+            // Simple implementation, might need to be extended
+            return null;
+        }
+    };
 
     private JSONB() {
         // Private constructor to prevent instantiation
@@ -21,7 +27,7 @@ public class JSONB {
      * @throws CodecException if the conversion fails
      */
     public static void toJson(Object object) throws CodecException {
-        CODEC.getGenerator().write(object, CONTEXT);
+        CODEC.getGenerator().writeObject(object);
     }
 
     /**

@@ -4,10 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.function.Consumer;
 
+import static io.libcodec.json.JSONObject.entry;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
-
-import static io.libcodec.json.JSONObject.entry;
 
 /**
  * JSONGenerator test class.
@@ -15,7 +14,6 @@ import static io.libcodec.json.JSONObject.entry;
  * to ensure the JSONGenerator's correctness and compatibility across different character encodings.
  */
 public class JSONGeneratorTest {
-
     /**
      * Run test method which executes the same test logic in both UTF-8 and UTF-16 encoding environments.
      * This ensures consistent behavior of the generator across different character encodings.
@@ -94,6 +92,20 @@ public class JSONGeneratorTest {
         run(
                 gen ->
                         gen.objectStart()
+                                .nameValue("name", 123.45F)
+                                .objectEnd(),
+                "{\"name\":123.45}"
+        );
+        run(
+                gen ->
+                        gen.objectStart()
+                                .nameValue("name", 123.45D)
+                                .objectEnd(),
+                "{\"name\":123.45}"
+        );
+        run(
+                gen ->
+                        gen.objectStart()
                                 .nameValue("name", true)
                                 .objectEnd(),
                 "{\"name\":true}"
@@ -114,24 +126,32 @@ public class JSONGeneratorTest {
                 "{}"
         );
         run(
-                gen->gen.object("name", "value"),
+                gen -> gen.object("name", "value"),
                 "{\"name\":\"value\"}"
         );
         run(
-                gen->gen.object("name", 123),
+                gen -> gen.object("name", 123),
                 "{\"name\":123}"
         );
         run(
-                gen->gen.object("name", 123L),
+                gen -> gen.object("name", 123L),
                 "{\"name\":123}"
         );
         run(
-                gen->gen.object("name", true),
+                gen -> gen.object("name", true),
                 "{\"name\":true}"
         );
         run(
-                gen->gen.object("name", false),
+                gen -> gen.object("name", false),
                 "{\"name\":false}"
+        );
+        run(
+                gen -> gen.object("name", 123.45f),
+                "{\"name\":123.45}"
+        );
+        run(
+                gen -> gen.object("name", 123.45D),
+                "{\"name\":123.45}"
         );
         run(
                 gen -> gen.object(

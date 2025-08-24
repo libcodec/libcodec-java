@@ -4,12 +4,15 @@ import io.libcodec.CodecContext;
 import io.libcodec.CodecException;
 import io.libcodec.Generator;
 
+import static io.libcodec.json.JSONObject.*;
+
 /**
  * JSON generator implementation.
  */
-public abstract class JSONGenerator
+public abstract sealed class JSONGenerator
         extends Generator
-        implements AutoCloseable {
+        implements AutoCloseable
+        permits JSONGeneratorUTF8, JSONGeneratorUTF16 {
     static final byte PRETTY_NON = 0, PRETTY_TAB = 1, PRETTY_2_SPACE = 2, PRETTY_4_SPACE = 4;
     protected byte pretty;
     protected int level;
@@ -57,19 +60,7 @@ public abstract class JSONGenerator
                 Feature.valueOf(features));
     }
 
-    @Override
-    public void write(Object object, CodecContext context) throws CodecException {
-        try {
-            // Assuming there's a JSON implementation available
-            // This is a simplified implementation
-            // In a real implementation, this would generate JSON to a destination
-            System.out.println("{}"); // Placeholder implementation
-        } catch (Exception e) {
-            throw new CodecException("Failed to generate JSON from object", e);
-        }
-    }
-
-    public JSONGenerator object() {
+    public final JSONGenerator object() {
         if (++level > maxLevel) {
             overflowLevel();
         }
@@ -79,44 +70,44 @@ public abstract class JSONGenerator
 
     public JSONGenerator object(String name, String value) {
         return objectStart()
-                .nameValue(name, value).
-                objectEnd();
+                .nameValue(name, value)
+                .objectEnd();
     }
 
     public JSONGenerator object(String name, int value) {
         return objectStart()
-                .nameValue(name, value).
-                objectEnd();
+                .nameValue(name, value)
+                .objectEnd();
     }
 
     public JSONGenerator object(String name, long value) {
         return objectStart()
-                .nameValue(name, value).
-                objectEnd();
+                .nameValue(name, value)
+                .objectEnd();
     }
 
     public JSONGenerator object(String name, boolean value) {
         return objectStart()
-                .nameValue(name, value).
-                objectEnd();
+                .nameValue(name, value)
+                .objectEnd();
     }
 
     public JSONGenerator object(String name, float value) {
         return objectStart()
-                .nameValue(name, value).
-                objectEnd();
+                .nameValue(name, value)
+                .objectEnd();
     }
 
     public JSONGenerator object(String name, double value) {
         return objectStart()
-                .nameValue(name, value).
-                objectEnd();
+                .nameValue(name, value)
+                .objectEnd();
     }
 
     public JSONGenerator object(JSONObject.Entry entry) {
         return objectStart()
-                .nameValue(entry).
-                objectEnd();
+                .nameValue(entry)
+                .objectEnd();
     }
 
     public JSONGenerator object(JSONObject.Entry... entries) {
@@ -146,40 +137,47 @@ public abstract class JSONGenerator
         return this;
     }
 
-    public JSONGenerator nameValue(JSONObject.Entry entry) {
-        JSONGenerator gen = writeName(entry.name()).writeColon();
+    public JSONGenerator nameValue(Entry entry) {
+        JSONGenerator gen = writeName(entry.name())
+                .writeColon();
         switch (entry) {
-            case JSONObject.EntryInt e -> gen.writeInt(e.valueInt());
-            case JSONObject.EntryLong e -> gen.writeLong(e.valueLong());
-            case JSONObject.EntryBoolean e -> gen.writeBool(e.valueBoolean());
-            case JSONObject.EntryString e -> gen.writeString(e.valueString());
-            default -> throw new JSONException("not support");
+            case EntryInt e -> gen.writeInt(e.valueInt());
+            case EntryLong e -> gen.writeLong(e.valueLong());
+            case EntryBoolean e -> gen.writeBool(e.valueBoolean());
+            case EntryString e -> gen.writeString(e.valueString());
+            case EntryFloat e -> gen.writeFloat(e.valueFloat());
+            case EntryDouble e -> gen.writeDouble(e.valueDouble());
+            default -> gen.writeObject(entry.value());
         }
         return this;
     }
 
     public JSONGenerator nameValue(String name, String value) {
-        return nameValue(JSONObject.entry(name, value));
+        return nameValue(entry(name, value));
     }
 
     public JSONGenerator nameValue(String name, int value) {
-        return nameValue(JSONObject.entry(name, value));
+        return nameValue(entry(name, value));
     }
 
     public JSONGenerator nameValue(String name, long value) {
-        return nameValue(JSONObject.entry(name, value));
+        return nameValue(entry(name, value));
     }
 
     public JSONGenerator nameValue(String name, boolean value) {
-        return nameValue(JSONObject.entry(name, value));
+        return nameValue(entry(name, value));
     }
 
     public JSONGenerator nameValue(String name, float value) {
-        return nameValue(JSONObject.entry(name, value));
+        return nameValue(entry(name, value));
     }
 
     public JSONGenerator nameValue(String name, double value) {
-        return nameValue(JSONObject.entry(name, value));
+        return nameValue(entry(name, value));
+    }
+
+    public JSONGenerator nameValue(String name, Object value) {
+        return nameValue(entry(name, value));
     }
 
     /**
@@ -204,10 +202,33 @@ public abstract class JSONGenerator
     public abstract JSONGenerator writeColon();
 
     /**
+     * Writes a null value.
+     */
+    public abstract JSONGenerator writeNull();
+
+    /**
      * Writes a string value.
      * @param str the string to write, can be null
      */
     public abstract JSONGenerator writeString(String str);
+
+    public JSONGenerator writeObject(Object object, CodecContext context) {
+        throw new JSONException("UnsupportedOperation");
+    }
+
+    public JSONGenerator writeObject(Object object) {
+        if (object == null) {
+            return writeNull();
+        }
+        throw new JSONException("UnsupportedOperation");
+    }
+
+    public final JSONGenerator writeInt(Integer value) {
+        if (value == null) {
+            return writeNull();
+        }
+        return writeInt(value.intValue());
+    }
 
     /**
      * Writes an int value.
@@ -216,14 +237,12 @@ public abstract class JSONGenerator
      */
     public abstract JSONGenerator writeInt(int value);
 
-
     /**
      * Writes a boolean value.
      *
      * @param value the boolean value to write
      */
     public abstract JSONGenerator writeBool(boolean value);
-
 
     /**
      * Writes a long value.
@@ -319,51 +338,6 @@ public abstract class JSONGenerator
     protected static final long MASK_BROWSER_SECURE = 1L << 35;
     protected static final long MASK_NOT_WRITE_NUMBER_CLASS_NAME = 1L << 40;
 
-    /**
-     * Feature is used to control the behavior of JSON writing and serialization in FASTJSON2.
-     * Each feature represents a specific configuration option that can be enabled or disabled
-     * to customize how Java objects are serialized to JSON format.
-     *
-     * <p>Features can be enabled in several ways:
-     * <ul>
-     *   <li>Using factory methods like {@link #of(Feature...)}</li>
-     *   <li>Using {@link Context#config(Feature...)} method</li>
-     *   <li>Using {@link JSONFactory#getDefaultWriterFeatures()} for global configuration</li>
-     * </ul>
-     *
-     *
-     * <p>Example usage:
-     * <pre>
-     * // Enable PrettyFormat feature for this writer only
-     * try (JSONWriter writer = JSONWriter.of(JSONWriter.Feature.PrettyFormat)) {
-     *     writer.writeAny(object);
-     *     String json = writer.toString();
-     * }
-     *
-     * // Enable multiple features
-     * try (JSONWriter writer = JSONWriter.of(
-     *         JSONWriter.Feature.PrettyFormat,
-     *         JSONWriter.Feature.WriteMapNullValue)) {
-     *     writer.writeAny(object);
-     *     String json = writer.toString();
-     * }
-     *
-     * // Using context configuration
-     * JSONWriter.Context context = new JSONWriter.Context();
-     * context.config(JSONWriter.Feature.PrettyFormat);
-     * try (JSONWriter writer = JSONWriter.of(context)) {
-     *     writer.writeAny(object);
-     *     String json = writer.toString();
-     * }
-     * </pre>
-     *
-     *
-     * <p>Features are implemented as bitmask flags for efficient storage and checking.
-     * Each feature has a unique mask value that is used internally to determine
-     * whether the feature is enabled in a given configuration.</p>
-     *
-     * @since 1.0.0
-     */
     public enum Feature {
         /**
          * Feature that determines whether to use field-based serialization instead of getter-based serialization.

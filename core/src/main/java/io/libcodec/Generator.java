@@ -5,11 +5,12 @@ package io.libcodec;
  */
 public abstract class Generator {
     protected int off;
+    protected CodecContext context;
+
     /**
      * Writes a string representation of an object
      * @param object the object to write
-     * @param context the codec context
      * @throws CodecException if writing fails
      */
-    public abstract void write(Object object, CodecContext context) throws CodecException;
+    public abstract Generator writeObject(Object object);
 }

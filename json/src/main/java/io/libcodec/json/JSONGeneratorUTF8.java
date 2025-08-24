@@ -1,7 +1,5 @@
 package io.libcodec.json;
 
-import io.libcodec.CodecContext;
-import io.libcodec.CodecException;
 import io.libcodec.json.util.IOUtils;
 import io.libcodec.json.util.NumberUtils;
 import io.libcodec.json.util.StringUtils;
@@ -24,11 +22,6 @@ final class JSONGeneratorUTF8
         super(features);
         this.bytes = new byte[1024];
         this.byteVectorQuote = this.useSingleQuote ? ~0x2727_2727_2727_2727L : ~0x2222_2222_2222_2222L;
-    }
-
-    @Override
-    public void write(Object object, CodecContext context) throws CodecException {
-        super.write(object, context);
     }
 
     @Override
@@ -551,6 +544,21 @@ final class JSONGeneratorUTF8
         }
         this.off = off;
 
+        return this;
+    }
+
+    @Override
+    public JSONGenerator writeNull() {
+        int off = this.off;
+        byte[] bytes = this.bytes;
+        if (off + 4 > bytes.length) {
+            bytes = grow(off + 4);
+        }
+        bytes[off] = 'n';
+        bytes[off + 1] = 'u';
+        bytes[off + 2] = 'l';
+        bytes[off + 3] = 'l';
+        this.off = off + 4;
         return this;
     }
 }

@@ -1,7 +1,5 @@
 package io.libcodec.json;
 
-import io.libcodec.CodecContext;
-import io.libcodec.CodecException;
 import io.libcodec.json.util.IOUtils;
 import io.libcodec.json.util.NumberUtils;
 import io.libcodec.json.util.StringUtils;
@@ -12,6 +10,7 @@ import static io.libcodec.json.JSONGenerator.Feature.BrowserSecure;
 import static io.libcodec.json.JSONGenerator.Feature.EscapeNoneAscii;
 import static io.libcodec.json.JSONGenerator.Feature.WriteBooleanAsNumber;
 import static io.libcodec.json.JSONGenerator.Feature.WriteNonStringValueAsString;
+import static io.libcodec.json.util.IOUtils.putNULL;
 
 /**
  * JSON generator implementation that generates objects to UTF-16 byte arrays.
@@ -23,11 +22,6 @@ final class JSONGeneratorUTF16
     JSONGeneratorUTF16(long features) {
         super(features);
         this.chars = new char[1024];
-    }
-
-    @Override
-    public void write(Object object, CodecContext context) throws CodecException {
-        super.write(object, context);
     }
 
     @Override
@@ -286,7 +280,6 @@ final class JSONGeneratorUTF16
         this.off = off + 2;
     }
 
-
     @Override
     public final JSONGenerator writeInt(int i) {
         boolean writeAsString = (features & MASK_WRITE_NON_STRING_VALUE_AS_STRING) != 0;
@@ -418,6 +411,21 @@ final class JSONGeneratorUTF16
             chars[off++] = '"';
         }
         this.off = off;
+        return this;
+    }
+
+    public JSONGenerator writeNull() {
+        int off = this.off;
+        int minCapacity = off + 4;
+        char[] chars = this.chars;
+        if (minCapacity > chars.length) {
+            chars = grow(minCapacity);
+        }
+        chars[off] = 'n';
+        chars[off + 1] = 'u';
+        chars[off + 2] = 'l';
+        chars[off + 3] = 'l';
+        this.off = off + 4;
         return this;
     }
 }
