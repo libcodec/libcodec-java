@@ -10,7 +10,7 @@ import static io.libcodec.json.JSONGenerator.Feature.BrowserSecure;
 import static io.libcodec.json.JSONGenerator.Feature.EscapeNoneAscii;
 import static io.libcodec.json.JSONGenerator.Feature.WriteBooleanAsNumber;
 import static io.libcodec.json.JSONGenerator.Feature.WriteNonStringValueAsString;
-import static io.libcodec.json.util.IOUtils.putNULL;
+import static io.libcodec.json.util.IOUtils.writeNull;
 
 /**
  * JSON generator implementation that generates objects to UTF-16 byte arrays.
@@ -236,7 +236,9 @@ final class JSONGeneratorUTF16
     }
 
     private char[] grow(int minCapacity) {
-        grow0(minCapacity);
+        if (minCapacity > chars.length) {
+            grow0(minCapacity);
+        }
         return chars;
     }
 
@@ -416,16 +418,8 @@ final class JSONGeneratorUTF16
 
     public JSONGenerator writeNull() {
         int off = this.off;
-        int minCapacity = off + 4;
-        char[] chars = this.chars;
-        if (minCapacity > chars.length) {
-            chars = grow(minCapacity);
-        }
-        chars[off] = 'n';
-        chars[off + 1] = 'u';
-        chars[off + 2] = 'l';
-        chars[off + 3] = 'l';
-        this.off = off + 4;
+        char[] chars = grow(off + 4);
+        this.off = IOUtils.writeNull(chars, off);
         return this;
     }
 }

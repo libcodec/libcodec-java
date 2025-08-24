@@ -237,6 +237,13 @@ public abstract sealed class JSONGenerator
      */
     public abstract JSONGenerator writeInt(int value);
 
+    public final JSONGenerator writeBool(Boolean value) {
+        if (value == null) {
+            return writeNull();
+        }
+        return writeBool(value.booleanValue());
+    }
+
     /**
      * Writes a boolean value.
      *

@@ -235,7 +235,9 @@ final class JSONGeneratorUTF8
     }
 
     private byte[] grow(int minCapacity) {
-        grow0(minCapacity);
+        if (minCapacity > bytes.length) {
+            grow0(minCapacity);
+        }
         return bytes;
     }
 
@@ -550,15 +552,8 @@ final class JSONGeneratorUTF8
     @Override
     public JSONGenerator writeNull() {
         int off = this.off;
-        byte[] bytes = this.bytes;
-        if (off + 4 > bytes.length) {
-            bytes = grow(off + 4);
-        }
-        bytes[off] = 'n';
-        bytes[off + 1] = 'u';
-        bytes[off + 2] = 'l';
-        bytes[off + 3] = 'l';
-        this.off = off + 4;
+        byte[] bytes = grow(off + 4);
+        this.off = IOUtils.writeNull(bytes, off);
         return this;
     }
 }

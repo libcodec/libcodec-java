@@ -2032,11 +2032,12 @@ public class IOUtils {
      * @param buf the byte array buffer to write to
      * @param pos the position in the buffer where to write "null"
      */
-    public static void putNULL(byte[] buf, int pos) {
+    public static int writeNull(byte[] buf, int pos) {
         buf[pos] = 'n';
         buf[pos + 1] = 'u';
         buf[pos + 2] = 'l';
         buf[pos + 3] = 'l';
+        return pos + 4;
     }
 
     /**
@@ -2047,11 +2048,12 @@ public class IOUtils {
      * @param buf the character array buffer to write to
      * @param pos the position in the buffer where to write "null"
      */
-    public static void putNULL(char[] buf, int pos) {
+    public static int writeNull(char[] buf, int pos) {
         buf[pos] = 'n';
         buf[pos + 1] = 'u';
         buf[pos + 2] = 'l';
         buf[pos + 3] = 'l';
+        return pos + 4;
     }
 
     /**
