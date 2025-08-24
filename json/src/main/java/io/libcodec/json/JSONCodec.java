@@ -16,7 +16,7 @@ public class JSONCodec
      */
     @Override
     public Generator getGenerator() {
-        return new JSONGeneratorUTF8();
+        return JSONGenerator.of();
     }
 
     /**

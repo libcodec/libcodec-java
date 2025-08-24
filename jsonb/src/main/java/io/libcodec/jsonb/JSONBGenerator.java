@@ -13,7 +13,7 @@ import java.util.Map;
  * JSON-B Generator implementation.
  */
 public class JSONBGenerator
-        implements Generator {
+        extends Generator {
     @Override
     public void write(Object object, CodecContext context) throws CodecException {
         try {

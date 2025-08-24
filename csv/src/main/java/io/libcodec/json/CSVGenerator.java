@@ -8,7 +8,7 @@ import io.libcodec.Generator;
  * CSV generator implementation.
  */
 public class CSVGenerator
-        implements Generator {
+        extends Generator {
     @Override
     public void write(Object object, CodecContext context) throws CodecException {
         try {
