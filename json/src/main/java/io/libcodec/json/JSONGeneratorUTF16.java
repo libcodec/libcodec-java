@@ -1,6 +1,7 @@
 package io.libcodec.json;
 
 import io.libcodec.io.CharBuffer;
+import io.libcodec.json.util.IOUtils;
 import io.libcodec.json.util.NumberUtils;
 import io.libcodec.json.util.StringUtils;
 

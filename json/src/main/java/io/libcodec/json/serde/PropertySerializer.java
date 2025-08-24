@@ -11,6 +11,7 @@ public abstract class PropertySerializer {
     public final Class<?> rawClass;
     public final Type type;
     public final long features;
+    protected final Object defaultValue;
     private char[] nameChars;
     private byte[] nameBytes;
 
@@ -19,6 +20,15 @@ public abstract class PropertySerializer {
         this.rawClass = rawClass;
         this.type = type;
         this.features = features;
+        this.defaultValue = null;
+    }
+
+    protected PropertySerializer(String name, Class<?> rawClass, Type type, long features, Object defaultValue) {
+        this.name = name;
+        this.rawClass = rawClass;
+        this.type = type;
+        this.features = features;
+        this.defaultValue = defaultValue;
     }
 
     final SerializeContext context(SerializeContext context) {
