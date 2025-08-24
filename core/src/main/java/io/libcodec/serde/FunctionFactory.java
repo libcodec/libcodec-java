@@ -91,6 +91,10 @@ public interface FunctionFactory {
         }
     }
 
+    default boolean isChainableSetter(Method method) {
+        return method.getReturnType() == method.getDeclaringClass();
+    }
+
     static FunctionFactory reflect() {
         return FunctionFactoryReflect.INSTANCE;
     }

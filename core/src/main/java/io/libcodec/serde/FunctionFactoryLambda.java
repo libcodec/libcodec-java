@@ -150,6 +150,11 @@ final class FunctionFactoryLambda extends FunctionFactoryUnsafe {
 
     @Override
     public ObjIntConsumer<Object> setInt(Method method) {
+        // If the method is chainable (returns the declaring class), use the parent implementation
+        if (isChainableSetter(method)) {
+            return super.setInt(method);
+        }
+
         validateMethodAndParameterType(method, int.class);
         try {
             MethodHandle handle = lookup.unreflect(method);
@@ -168,6 +173,11 @@ final class FunctionFactoryLambda extends FunctionFactoryUnsafe {
 
     @Override
     public ObjLongConsumer<Object> setLong(Method method) {
+        // If the method is chainable (returns the declaring class), use the parent implementation
+        if (isChainableSetter(method)) {
+            return super.setLong(method);
+        }
+
         validateMethodAndParameterType(method, long.class);
         try {
             MethodHandle handle = lookup.unreflect(method);
@@ -186,6 +196,11 @@ final class FunctionFactoryLambda extends FunctionFactoryUnsafe {
 
     @Override
     public BiConsumer<Object, Float> setFloat(Method method) {
+        // If the method is chainable (returns the declaring class), use the parent implementation
+        if (isChainableSetter(method)) {
+            return super.setFloat(method);
+        }
+
         validateMethodAndParameterType(method, float.class);
         try {
             MethodHandle handle = lookup.unreflect(method);
@@ -204,6 +219,11 @@ final class FunctionFactoryLambda extends FunctionFactoryUnsafe {
 
     @Override
     public ObjDoubleConsumer<Object> setDouble(Method method) {
+        // If the method is chainable (returns the declaring class), use the parent implementation
+        if (isChainableSetter(method)) {
+            return super.setDouble(method);
+        }
+
         validateMethodAndParameterType(method, double.class);
         try {
             MethodHandle handle = lookup.unreflect(method);
@@ -222,6 +242,11 @@ final class FunctionFactoryLambda extends FunctionFactoryUnsafe {
 
     @Override
     public BiConsumer<Object, Boolean> setBoolean(Method method) {
+        // If the method is chainable (returns the declaring class), use the parent implementation
+        if (isChainableSetter(method)) {
+            return super.setBoolean(method);
+        }
+
         validateMethodAndParameterType(method, boolean.class);
         try {
             MethodHandle handle = lookup.unreflect(method);
@@ -240,6 +265,11 @@ final class FunctionFactoryLambda extends FunctionFactoryUnsafe {
 
     @Override
     public BiConsumer<Object, Character> setChar(Method method) {
+        // If the method is chainable (returns the declaring class), use the parent implementation
+        if (isChainableSetter(method)) {
+            return super.setChar(method);
+        }
+
         validateMethodAndParameterType(method, char.class);
         try {
             MethodHandle handle = lookup.unreflect(method);
@@ -258,6 +288,11 @@ final class FunctionFactoryLambda extends FunctionFactoryUnsafe {
 
     @Override
     public BiConsumer<Object, Object> setObject(Method method) {
+        // If the method is chainable (returns the declaring class), use the parent implementation
+        if (isChainableSetter(method)) {
+            return super.setObject(method);
+        }
+
         validateMethod(method);
         Class<?>[] parameterTypes = method.getParameterTypes();
         if (parameterTypes.length != 1) {
