@@ -1,7 +1,7 @@
 package io.libcodec.json.serde;
 
 import io.libcodec.CodecException;
-import io.libcodec.util.IdentityMap;
+import io.libcodec.internal.IdentityMap;
 
 public class ClassResolver {
     private ClassInfo classInfoCache;

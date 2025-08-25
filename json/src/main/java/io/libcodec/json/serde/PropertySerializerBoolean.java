@@ -1,15 +1,12 @@
 package io.libcodec.json.serde;
 
-import io.libcodec.json.JSONException;
 import io.libcodec.json.JSONGenerator;
 import io.libcodec.json.JSONGeneratorUTF16;
 import io.libcodec.json.JSONGeneratorUTF8;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.function.Predicate;
 
-public abstract class PropertySerializerBoolean extends PropertySerializer {
+abstract class PropertySerializerBoolean extends PropertySerializer {
     private final boolean defaultValueBoolean;
 
     protected PropertySerializerBoolean(
@@ -51,38 +48,5 @@ public abstract class PropertySerializerBoolean extends PropertySerializer {
 
     public abstract boolean getBoolean(Object object);
 
-    public static PropertySerializerBoolean of(String propertyName, Predicate<Object> function) {
-        return of(propertyName, 0, false, function);
-    }
 
-    public static PropertySerializerBoolean of(String propertyName, long features, boolean defaultValue, Predicate<Object> function) {
-        return new PropertySerializerBoolean(propertyName, features, defaultValue) {
-            @Override
-            public boolean getBoolean(Object object) {
-                return function.test(object);
-            }
-        };
-    }
-
-    public static PropertySerializerBoolean of(String propertyName, long features, boolean defaultValue, Field field) {
-        return of(propertyName, features, defaultValue, o -> {
-            try {
-                return field.getBoolean(o);
-            }
-            catch (IllegalAccessException e) {
-                throw new JSONException(e);
-            }
-        });
-    }
-
-    public static PropertySerializerBoolean of(String propertyName, long features, boolean defaultValue, Method method) {
-        return of(propertyName, features, defaultValue, o -> {
-            try {
-                return (boolean) method.invoke(o);
-            }
-            catch (ReflectiveOperationException e) {
-                throw new JSONException(e);
-            }
-        });
-    }
 }

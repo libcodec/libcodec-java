@@ -3,12 +3,22 @@ package io.libcodec.json.serde;
 import io.libcodec.json.JSONGeneratorUTF16;
 import io.libcodec.json.JSONGeneratorUTF8;
 
+import java.lang.reflect.Type;
+
 public class BeanSerializer implements Serializer {
+    private final Class<?> rawClass;
+    private final Type type;
     private final PropertySerializer[] properties;
     private final SerializerUTF8 serializerUTF8;
     private final SerializerUTF16 serializerUTF16;
 
     public BeanSerializer(PropertySerializer[] properties) {
+        this(null, null, properties);
+    }
+
+    public BeanSerializer(Class<?> rawClass, Type type, PropertySerializer[] properties) {
+        this.rawClass = rawClass;
+        this.type = type;
         this.properties = properties;
         serializerUTF8 = createSerializerUTF8(properties);
         serializerUTF16 = createSerializerUTF16(properties);

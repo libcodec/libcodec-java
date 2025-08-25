@@ -10,7 +10,7 @@ public class BeanSerializerTest {
     @Test
     public void test() {
         BeanSerializer serializer = new BeanSerializer(
-                new PropertySerializer[] {PropertySerializerInt.of("name", (Object e) -> ((Person) e).age())}
+                new PropertySerializer[] {PropertySerializerInt.getInt("name", (Object e) -> ((Person) e).age())}
         );
         assertEquals(1, serializer.getPropertiesCount());
         JSONGeneratorUTF8 generator = JSONGeneratorUTF8.ofUTF8();

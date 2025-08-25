@@ -1,15 +1,12 @@
 package io.libcodec.json.serde;
 
-import io.libcodec.json.JSONException;
 import io.libcodec.json.JSONGenerator;
 import io.libcodec.json.JSONGeneratorUTF16;
 import io.libcodec.json.JSONGeneratorUTF8;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.function.ToIntFunction;
 
-public abstract class PropertySerializerInt extends PropertySerializer {
+abstract class PropertySerializerInt extends PropertySerializer {
     private final int defaultValueInt;
     protected PropertySerializerInt(
             String propertyName,
@@ -50,38 +47,16 @@ public abstract class PropertySerializerInt extends PropertySerializer {
 
     public abstract int getInt(Object object);
 
-    public static PropertySerializerInt of(String propertyName, ToIntFunction<Object> function) {
-        return of(propertyName, 0, 0, function);
+    public static PropertySerializerInt getInt(String propertyName, ToIntFunction<Object> function) {
+        return getInt(propertyName, 0, 0, function);
     }
 
-    public static PropertySerializerInt of(String propertyName, long features, int defaultValue, ToIntFunction<Object> function) {
+    public static PropertySerializerInt getInt(String propertyName, long features, int defaultValue, ToIntFunction<Object> function) {
         return new PropertySerializerInt(propertyName, features, defaultValue) {
             @Override
             public int getInt(Object object) {
                 return function.applyAsInt(object);
             }
         };
-    }
-
-    public static PropertySerializerInt of(String propertyName, long features, int defaultValue, Field field) {
-        return of(propertyName, features, defaultValue, o -> {
-            try {
-                return field.getInt(o);
-            }
-            catch (IllegalAccessException e) {
-                throw new JSONException(e);
-            }
-        });
-    }
-
-    public static PropertySerializerInt of(String propertyName, long features, int defaultValue, Method method) {
-        return of(propertyName, features, defaultValue, o -> {
-            try {
-                return (int) method.invoke(o);
-            }
-            catch (ReflectiveOperationException e) {
-                throw new JSONException(e);
-            }
-        });
     }
 }
